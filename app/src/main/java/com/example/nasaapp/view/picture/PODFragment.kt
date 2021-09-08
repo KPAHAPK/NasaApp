@@ -14,6 +14,7 @@ import com.example.nasaapp.R
 import com.example.nasaapp.databinding.FragmentMainBinding
 import com.example.nasaapp.repository.PODData
 import com.example.nasaapp.view.MainActivity
+import com.example.nasaapp.view.chips.ChipsFragment
 import com.example.nasaapp.viewLifeCycle
 import com.example.nasaapp.viewmodel.PODViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -21,7 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-private lateinit var fab:FloatingActionButton
+private lateinit var fab: FloatingActionButton
 
 class PODFragment : Fragment() {
     private var binding: FragmentMainBinding by viewLifeCycle()
@@ -135,6 +136,10 @@ class PODFragment : Fragment() {
             }
             R.id.app_bar_settings -> {
                 Toast.makeText(requireContext(), "Settings", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, ChipsFragment.newInstance())
+                    .addToBackStack("")
+                    .commit()
             }
             R.id.app_bar_search -> {
                 Toast.makeText(requireContext(), "Search", Toast.LENGTH_SHORT).show()
