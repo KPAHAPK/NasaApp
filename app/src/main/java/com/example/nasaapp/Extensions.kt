@@ -6,7 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 fun <T> Fragment.viewLifeCycle(): ReadWriteProperty<Fragment, T> =
-    object : ReadWriteProperty<Fragment, T>, DefaultLifecycleObserver {
+    object : ReadWriteProperty<Fragment, T>, LifecycleObserver {
         private var binding: T? = null
 
         init {
@@ -18,7 +18,8 @@ fun <T> Fragment.viewLifeCycle(): ReadWriteProperty<Fragment, T> =
                 })
         }
 
-        override fun onDestroy(owner: LifecycleOwner) {
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        private fun onDestroy() {
             binding = null
         }
 

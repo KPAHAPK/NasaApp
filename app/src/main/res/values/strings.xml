@@ -7,5 +7,6 @@
     <string name="favourite">favourite</string>
     <string name="settings">settings</string>
     <string name="search">Search</string>
+    <string name="fab_button_content_description">Fab button</string>
 
 </resources>
