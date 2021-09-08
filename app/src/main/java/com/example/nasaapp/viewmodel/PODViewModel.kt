@@ -1,6 +1,7 @@
 package com.example.nasaapp.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,8 @@ import com.example.nasaapp.repository.PODRetrofitImpl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 private const val TAG = "PODViewModel"
 
@@ -24,10 +27,16 @@ class PODViewModel() : ViewModel() {
     fun sendServerRequest() {
         liveDataToObserver.postValue(PODData.Loading)
         val apiKey = BuildConfig.NASA_API_KEY
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, -3)
+        val pattern = "yyyy-MM-dd"
+        val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+        val date = simpleDateFormat.format(calendar.time)
+        Log.d("DATE", date)
         if (apiKey.isBlank()) {
             error("API ключ пустой")
         } else {
-            retrofitImpl.getRetrofitImpl().getPOD(apiKey).enqueue(
+            retrofitImpl.getRetrofitImpl().getPOYesterday(date, apiKey).enqueue(
                 object : Callback<PODServerResponseData> {
                     override fun onResponse(
                         call: Call<PODServerResponseData>,
