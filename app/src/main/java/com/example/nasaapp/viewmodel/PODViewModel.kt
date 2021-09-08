@@ -40,6 +40,7 @@ class PODViewModel() : ViewModel() {
                             }
 
                         } else {
+                            //TODO Вывод номер ошибки и текста
                             Log.d(TAG, "My API Key: $apiKey")
                             error("Запрос отклонен")
                         }

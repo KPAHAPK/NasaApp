@@ -13,4 +13,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="CustomOutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="counterEnabled">false</item>
+        <item name="counterOverflowTextColor">@color/colorPrimary</item>
+        <item name="boxStrokeColor">@color/navy</item>
+        <item name="boxStrokeErrorColor">@color/lime</item>
+<!--        <item name="passwordToggleEnabled">true</item>-->
+        <item name="endIconMode">custom</item>
+        <item name="endIconDrawable">@drawable/ic_wikipedia</item>
+    </style>
 </resources>
