@@ -19,9 +19,12 @@ import com.example.nasaapp.viewLifeCycle
 import com.example.nasaapp.viewmodel.PODViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
+import java.util.concurrent.Executors
 
 private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+
 
 class PODFragment : Fragment() {
     private var binding: FragmentMainBinding by viewLifeCycle()
@@ -29,6 +32,16 @@ class PODFragment : Fragment() {
     private val viewModelPOD: PODViewModel by lazy {
         ViewModelProvider(this)[PODViewModel::class.java]
     }
+
+    private var PODDayOffset: Int = 0
+
+    private lateinit var copyright : String
+    private lateinit var date : String
+    private lateinit var explanation : String
+    private lateinit var mediaType : String
+    private lateinit var title : String
+    private lateinit var url : String
+    private lateinit var hdurl : String
 
 
     override fun onCreateView(
@@ -52,14 +65,24 @@ class PODFragment : Fragment() {
                 isMain = false
                 binding.bottomAppBar.navigationIcon = null
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
-                binding.fab.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_back_fab))
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.ic_back_fab
+                    )
+                )
                 binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar_other_screen)
             } else {
                 isMain = true
                 binding.bottomAppBar.navigationIcon =
                     ContextCompat.getDrawable(context, R.drawable.ic_hamburger_menu_bottom_bar)
                 binding.bottomAppBar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
-                binding.fab.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_plus_fab))
+                binding.fab.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.ic_plus_fab
+                    )
+                )
                 binding.bottomAppBar.replaceMenu(R.menu.menu_bottom_bar)
             }
 
@@ -68,27 +91,70 @@ class PODFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModelPOD.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-        viewModelPOD.sendServerRequest()
+
+        viewModelPOD.sendServerRequest(0)
 
         binding.inputLayout.setEndIconOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data =
-                    Uri.parse("http://en.wikipedia.org/wiki/${binding.inputEditText.text.toString()}")
+                    Uri.parse(
+                        getString(
+                            R.string.baseWikiURL,
+                            binding.inputEditText.text.toString()
+                        )
+                    )
             }
             startActivity(intent)
         }
         setBottomSheetBehaviour(binding.includedBottomSheet.bottomSheetContainer)
-        binding.chipImageChooser.setOnCheckedChangeListener { _, position ->
+        setChipPODListener()
+    }
 
+    private fun setChipPODListener() {
+        var lastCheckedId = View.NO_ID
+        binding.chipImageChooser.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == View.NO_ID) {
+                group.check(lastCheckedId)
+                return@setOnCheckedChangeListener
+            }
+            lastCheckedId = checkedId
+
+            val chip: Chip? = group.findViewById(lastCheckedId)
+            chip?.let {
+                viewModelPOD.apply {
+                    when (chip) {
+                        binding.chipImageToday -> {
+                            PODDayOffset = 0
+                        }
+                        binding.chipImageYesterday -> {
+                            PODDayOffset = -1
+                        }
+                        binding.chipImageBeforeYesterday -> {
+                            PODDayOffset = -2
+                        }
+                    }
+                    sendServerRequest(PODDayOffset)
+                }
+            }
+        }
+
+        binding.chipImageHd.setOnCheckedChangeListener { compoundButton, b ->
+            binding.imagePictureOfTheDate.apply {
+                when (b){
+                    true -> load(hdurl)
+                    false -> load(url)
+                }
+            }
         }
     }
 
     private fun setBottomSheetBehaviour(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         /*  bottomSheetBehavior.addBottomSheetCallback(object :
               BottomSheetBehavior.BottomSheetCallback() {
               override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -111,17 +177,36 @@ class PODFragment : Fragment() {
     private fun renderData(data: PODData) {
         when (data) {
             is PODData.Error -> {//TODO HW
-                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                val errorSnackbar =
+                    Snackbar.make(binding.root, "Попробуйте заного", Snackbar.LENGTH_INDEFINITE)
+                errorSnackbar.setAction("Retry") {
+                    viewModelPOD.sendServerRequest(PODDayOffset)
+                }
+                errorSnackbar.show()
             }
             is PODData.Loading -> {
-                Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.VISIBLE
             }
             is PODData.Success -> {
-                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-                binding.imagePictureOfTheDate.load(data.serverResponseData.hdurl) {
+                binding.progressBar.visibility = View.GONE
+                copyright = data.serverResponseData.copyright.toString()
+                date = data.serverResponseData.date.toString()
+                explanation = data.serverResponseData.explanation.toString()
+                mediaType = data.serverResponseData.mediaType.toString()
+                title = data.serverResponseData.title.toString()
+                url = data.serverResponseData.url.toString()
+                hdurl = data.serverResponseData.hdurl.toString()
+                binding.imagePictureOfTheDate.load(url) {
                     error(R.drawable.ic_load_error_vector)
                 }
             }
+        }
+    }
+
+    private fun startProgressBar(){
+        val executer = Executors.newSingleThreadExecutor()
+        executer.execute{
+
         }
     }
 

@@ -8,5 +8,10 @@
     <string name="settings">settings</string>
     <string name="search">Search</string>
     <string name="fab_button_content_description">Fab button</string>
+    <string name="baseWikiURL">http://en.wikipedia.org/wiki/%s</string>
+    <string name="before_yestarday">Позавчера</string>
+    <string name="yesterday">Вчера</string>
+    <string name="today">Сегодня</string>
+    <string name="hd">HD</string>
 
 </resources>
