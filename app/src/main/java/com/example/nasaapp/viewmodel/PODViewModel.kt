@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.nasaapp.BuildConfig
+import com.example.nasaapp.R
 import com.example.nasaapp.repository.PODData
 import com.example.nasaapp.repository.PODRetrofitImpl
 import retrofit2.Call
@@ -36,7 +37,7 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
         val date = simpleDateFormat.format(calendar.time)
 
         if (apiKey.isBlank()) {
-            error("API ключ пустой")
+            error(R.string.api_key_is_blank)
         } else {
             retrofitImpl.getRetrofitImpl().getPOD(date, apiKey).enqueue(
                 object : Callback<PODServerResponseData> {
@@ -47,7 +48,6 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
                         if (response.isSuccessful) {
                             response.body()?.let {
                                 liveDataToObserver.postValue(PODData.Success(it))
-                                Log.d(TAG, "Запрос выполнен успешно")
                             }
 
                         } else {
@@ -60,9 +60,6 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
                                 "Error $code: $message",
                                 Toast.LENGTH_SHORT
                             ).show()
-//                            response.errorBody()?.let {
-//                                liveDataToObserver.postValue(PODData.Error(it.))
-//                            }
                         }
                     }
 

@@ -21,7 +21,6 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
-import java.util.concurrent.Executors
 
 private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -35,13 +34,13 @@ class PODFragment : Fragment() {
 
     private var PODDayOffset: Int = 0
 
-    private lateinit var copyright : String
-    private lateinit var date : String
-    private lateinit var explanation : String
-    private lateinit var mediaType : String
-    private lateinit var title : String
-    private lateinit var url : String
-    private lateinit var hdurl : String
+    private lateinit var copyright: String
+    private lateinit var date: String
+    private lateinit var explanation: String
+    private lateinit var mediaType: String
+    private lateinit var title: String
+    private lateinit var url: String
+    private lateinit var hdurl: String
 
 
     override fun onCreateView(
@@ -96,7 +95,8 @@ class PODFragment : Fragment() {
             renderData(it)
         }
 
-        viewModelPOD.sendServerRequest(0)
+        viewModelPOD.sendServerRequest(PODDayOffset)
+
 
         binding.inputLayout.setEndIconOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -112,6 +112,7 @@ class PODFragment : Fragment() {
         }
         setBottomSheetBehaviour(binding.includedBottomSheet.bottomSheetContainer)
         setChipPODListener()
+
     }
 
     private fun setChipPODListener() {
@@ -144,7 +145,7 @@ class PODFragment : Fragment() {
 
         binding.chipImageHd.setOnCheckedChangeListener { compoundButton, b ->
             binding.imagePictureOfTheDate.apply {
-                when (b){
+                when (b) {
                     true -> load(hdurl)
                     false -> load(url)
                 }
@@ -178,8 +179,8 @@ class PODFragment : Fragment() {
         when (data) {
             is PODData.Error -> {//TODO HW
                 val errorSnackbar =
-                    Snackbar.make(binding.root, "Попробуйте заного", Snackbar.LENGTH_INDEFINITE)
-                errorSnackbar.setAction("Retry") {
+                    Snackbar.make(binding.root, R.string.retry_request, Snackbar.LENGTH_INDEFINITE)
+                errorSnackbar.setAction(R.string.snackbar_retry_message) {
                     viewModelPOD.sendServerRequest(PODDayOffset)
                 }
                 errorSnackbar.show()
@@ -196,18 +197,26 @@ class PODFragment : Fragment() {
                 title = data.serverResponseData.title.toString()
                 url = data.serverResponseData.url.toString()
                 hdurl = data.serverResponseData.hdurl.toString()
-                binding.imagePictureOfTheDate.load(url) {
-                    error(R.drawable.ic_load_error_vector)
-                }
+                updateUI()
             }
         }
     }
 
-    private fun startProgressBar(){
-        val executer = Executors.newSingleThreadExecutor()
-        executer.execute{
-
+    private fun updateUI() {
+        binding.imagePictureOfTheDate.apply {
+            if (binding.chipImageHd.isChecked) {
+                load(url) {
+                    error(R.drawable.ic_load_error_vector)
+                }
+            } else {
+                load(hdurl) {
+                    error(R.drawable.ic_load_error_vector)
+                }
+            }
         }
+        binding.includedBottomSheet.bottomSheetDescriptionHeader.text = title
+        binding.includedBottomSheet.bottomSheetDescription.text = explanation
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -218,22 +227,22 @@ class PODFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.app_bar_fav -> {
-                Toast.makeText(requireContext(), "Favourite", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.favourite, Toast.LENGTH_SHORT).show()
             }
             R.id.app_bar_settings -> {
-                Toast.makeText(requireContext(), "Settings", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.container, ChipsFragment.newInstance())
                     .addToBackStack("")
                     .commit()
             }
             R.id.app_bar_search -> {
-                Toast.makeText(requireContext(), "Search", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.search, Toast.LENGTH_SHORT).show()
             }
             android.R.id.home -> {
-                Toast.makeText(requireContext(), "Home", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.home, Toast.LENGTH_SHORT).show()
                 activity?.let {
-                    BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
+                    BottomNavigationDrawerFragment().show(it.supportFragmentManager, "")
                 }
             }
         }
