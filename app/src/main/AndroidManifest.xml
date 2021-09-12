@@ -12,7 +12,8 @@
         android:theme="@style/Theme.NasaApp">
         <activity
             android:name=".view.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.NasaApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

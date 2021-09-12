@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.nasaapp.databinding.FragmentChipsBinding
+import com.example.nasaapp.databinding.FragmentSettingsBinding
 import com.example.nasaapp.viewLifeCycle
 
-class ChipsFragment: Fragment() {
+class SettingsFragment: Fragment() {
 
-    private var binding: FragmentChipsBinding by viewLifeCycle()
+    private var binding: FragmentSettingsBinding by viewLifeCycle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentChipsBinding.inflate(inflater)
+        binding = FragmentSettingsBinding.inflate(inflater)
         val view = binding.root
         return view
     }
@@ -25,14 +25,14 @@ class ChipsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.chipGroup.setOnCheckedChangeListener{ _, position->
+        binding.includedChips.chipGroup.setOnCheckedChangeListener{ _, position->
             Toast.makeText(context,"Click $position", Toast.LENGTH_SHORT).show()
         }
-        binding.chipClose.setOnCloseIconClickListener {
+        binding.includedChips.chipClose.setOnCloseIconClickListener {
             Toast.makeText(context,"Click on chipWithClose", Toast.LENGTH_SHORT).show()
         }
     }
     companion object {
-        fun newInstance() = ChipsFragment()
+        fun newInstance() = SettingsFragment()
     }
 }

@@ -1,7 +1,6 @@
 package com.example.nasaapp.viewmodel
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -54,7 +53,8 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
                             //TODO Вывод номер ошибки и текста
                             val code = response.code()
                             val message = response.message()
-                            liveDataToObserver.value = PODData.Error(Throwable("Error $code: $message"))
+                            liveDataToObserver.value =
+                                PODData.Error(Throwable("Error $code: $message"))
                             Toast.makeText(
                                 getApplication(),
                                 "Error $code: $message",

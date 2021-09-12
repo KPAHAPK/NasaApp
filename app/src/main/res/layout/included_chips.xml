@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/startMarginRowContent"
+        android:layout_marginTop="@dimen/topMarginRowContent"
+        android:layout_marginEnd="@dimen/endMarginRowContent"
         android:orientation="horizontal">
 
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Action"
+            android:textAppearance="@style/ActionChipText.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Default" />
@@ -29,6 +34,7 @@
 
         <com.google.android.material.chip.Chip
             style="@style/Widget.MaterialComponents.Chip.Action"
+            android:textAppearance="@style/ChoiceChipText.Italic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Action" />
@@ -41,13 +47,21 @@
 
     </LinearLayout>
 
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/startMarginRowContent"
+        android:layout_marginTop="@dimen/topMarginRowContent"
+        android:layout_marginEnd="@dimen/endMarginRowContent"
         android:orientation="horizontal">
 
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAppearance="@style/ChoiceChipText.Italic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Background Color"
@@ -55,40 +69,49 @@
 
         <com.google.android.material.chip.Chip
             style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:textAppearance="@style/ChoiceChipText.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ripple Color"
             app:rippleColor="@android:color/holo_orange_dark" />
 
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chip icon"
             app:chipIcon="@drawable/ic_archive"
             app:iconStartPadding="10dp" />
     </LinearLayout>
+    </HorizontalScrollView>
 
     <com.google.android.material.chip.ChipGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginStart="@dimen/startMarginRowContent"
+        android:layout_marginTop="@dimen/topMarginRowContent"
+        android:layout_marginEnd="@dimen/endMarginRowContent">
 
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chip" />
 
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Group" />
 
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="One" />
 
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Two" />
@@ -101,9 +124,13 @@
         android:fadeScrollbars="true">
 
         <com.google.android.material.chip.ChipGroup
-            android:layout_width="wrap_content"
+
             android:id="@+id/scroll_chip_group"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/startMarginRowContent"
+            android:layout_marginTop="@dimen/topMarginRowContent"
+            android:layout_marginEnd="@dimen/endMarginRowContent"
             app:chipSpacingHorizontal="25dp"
             app:singleLine="true">
 
@@ -167,6 +194,10 @@
         android:id="@+id/chipGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/startMarginRowContent"
+
+        android:layout_marginTop="@dimen/topMarginRowContent"
+        android:layout_marginEnd="@dimen/endMarginRowContent"
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
@@ -196,6 +227,5 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
         android:text="Close Icon Listener" />
-
 
 </LinearLayout>

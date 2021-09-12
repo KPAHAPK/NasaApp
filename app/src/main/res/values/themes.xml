@@ -3,6 +3,7 @@
     <style name="Theme.NasaApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryDark">#00000000</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -10,17 +11,35 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+<!--        <item name="textInputStyle">?attr/textOutlineColor</item>-->
+        <item name="textOutlineColor">@color/red</item>
+<!--        <item name="fontFamily">@font/o</item>-->
+<!--        <item name="android:fontFamily">@font/o</item>-->
+        <item name="chipStyle">@style/ChoiceChipText.Italic</item>
+
+<!--        <item name="boxStrokeErrorColor">?android:colorError</item>-->
+    </style>
+
+    <style name="Theme.NasaApp.myTheme1">
+        <item name="textOutlineColor">@color/green</item>
+    </style>
+
+    <style name="Theme.NasaApp.myTheme2">
+        <item name="textOutlineColor">@color/olive</item>
+
     </style>
 
     <style name="CustomOutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="counterEnabled">false</item>
         <item name="counterOverflowTextColor">@color/colorPrimary</item>
-        <item name="boxStrokeColor">@color/navy</item>
-        <item name="boxStrokeErrorColor">@color/lime</item>
+        <item name="boxStrokeColor">?attr/textOutlineColor</item>
         <!--        <item name="passwordToggleEnabled">true</item>-->
         <item name="endIconMode">custom</item>
-        <item name="endIconDrawable">@drawable/ic_wikipedia</item>
+`        <item name="endIconDrawable">@drawable/ic_wikipedia</item>
+
     </style>
+
+
+
 </resources>

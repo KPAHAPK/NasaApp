@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActionChipText" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ActionChipText.Regular">
+        <item name="fontFamily">@font/my_font_choice_chip_normal_400
+        </item>
+    </style>
+
+    <style name="ActionChipText.Italic">
+        <item name="fontFamily">@font/my_font_choice_chip_italic_400</item>
+    </style>
+
+</resources>
