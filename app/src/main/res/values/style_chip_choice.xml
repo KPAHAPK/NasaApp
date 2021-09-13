@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="ChoiceChipText" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="android:textSize">20sp</item>
     </style>
@@ -9,6 +10,6 @@
     </style>
 
     <style name="ChoiceChipText.Italic">
-        <item name="android:fontFamily">@font/my_font_action_chip_italic_700</item>
+        <item name="fontFamily">@font/my_font_action_chip_italic_700</item>
     </style>
 </resources>

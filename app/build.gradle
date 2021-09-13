@@ -22,7 +22,7 @@ android {
         buildConfigField "String", "NASA_API_KEY", localProperties['NASA_API_KEY']
     }
 
-    buildTypes{
+    buildTypes {
         BuildConf
     }
 
@@ -40,7 +40,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 }

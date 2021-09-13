@@ -17,10 +17,10 @@
             android:hint="@string/search_wiki"
             app:counterEnabled="true"
             app:counterMaxLength="20"
+            app:helperText="@string/wiki_helper_text"
             app:layout_constraintBottom_toTopOf="@id/chip_image_chooser"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:helperText="@string/wiki_helper_text">
+            app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_edit_text"
@@ -33,11 +33,11 @@
             android:id="@+id/chip_image_chooser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:selectionRequired="true"
             app:checkedChip="@id/chip_image_today"
             app:layout_constraintBottom_toTopOf="@id/image_picture_of_the_date"
             app:layout_constraintEnd_toStartOf="@id/chip_image_hd"
             app:layout_constraintStart_toStartOf="parent"
+            app:selectionRequired="true"
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
@@ -45,21 +45,21 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/before_yestarday"/>
+                android:text="@string/before_yestarday" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_image_yesterday"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/yesterday"/>
+                android:text="@string/yesterday" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_image_today"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/today"/>
+                android:text="@string/today" />
 
         </com.google.android.material.chip.ChipGroup>
 
@@ -92,10 +92,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            app:layout_constraintTop_toTopOf="@id/image_picture_of_the_date"
             app:layout_constraintBottom_toBottomOf="@id/image_picture_of_the_date"
+            app:layout_constraintEnd_toEndOf="@id/image_picture_of_the_date"
             app:layout_constraintStart_toStartOf="@id/image_picture_of_the_date"
-            app:layout_constraintEnd_toEndOf="@id/image_picture_of_the_date"/>
+            app:layout_constraintTop_toTopOf="@id/image_picture_of_the_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -109,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="?attr/colorPrimary"
         app:fabAlignmentMode="center"
         app:fabAnimationMode="scale"
         app:fabCradleMargin="5dp"

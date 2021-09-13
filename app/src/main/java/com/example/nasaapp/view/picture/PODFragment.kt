@@ -237,13 +237,10 @@ class PODFragment : Fragment() {
                     .addToBackStack("")
                     .commit()
             }
-            R.id.app_bar_search -> {
-                Toast.makeText(requireContext(), R.string.search, Toast.LENGTH_SHORT).show()
-            }
             android.R.id.home -> {
                 Toast.makeText(requireContext(), R.string.home, Toast.LENGTH_SHORT).show()
                 activity?.let {
-                    BottomNavigationDrawerFragment().show(it.supportFragmentManager, "")
+                    BottomNavigationDrawerPODFragment().show(it.supportFragmentManager, "")
                 }
             }
         }

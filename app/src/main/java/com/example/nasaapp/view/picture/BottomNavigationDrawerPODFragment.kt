@@ -10,7 +10,7 @@ import com.example.nasaapp.databinding.BottomNavigationLayoutBinding
 import com.example.nasaapp.viewLifeCycle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
+class BottomNavigationDrawerPODFragment : BottomSheetDialogFragment() {
 
     private var binding: BottomNavigationLayoutBinding by viewLifeCycle()
 
@@ -41,7 +41,7 @@ class BottomNavigationDrawerFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance() = BottomNavigationDrawerFragment()
+        fun newInstance() = BottomNavigationDrawerPODFragment()
 
     }
 }

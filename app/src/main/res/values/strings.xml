@@ -17,5 +17,7 @@
     <string name="snackbar_retry_message">Retry</string>
     <string name="home">Home</string>
     <string name="api_key_is_blank">API ключ пустой</string>
+    <string name="theme_menu_title">Theme</string>
+    <string name="title_theme_chooser">Выберите тему:</string>
 
 </resources>

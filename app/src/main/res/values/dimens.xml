@@ -3,4 +3,5 @@
     <dimen name="topMarginRowContent">16dp</dimen>
     <dimen name="startMarginRowContent">16dp</dimen>
     <dimen name="endMarginRowContent">16dp</dimen>
+    <dimen name="bottomMarginRowContent">16dp</dimen>
 </resources>
