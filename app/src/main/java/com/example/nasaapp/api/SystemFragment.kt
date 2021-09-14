@@ -16,4 +16,8 @@ class SystemFragment: Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_system, container, false)
     }
+
+    companion object{
+        fun newInstance() = SystemFragment()
+    }
 }

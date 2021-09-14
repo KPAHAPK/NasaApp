@@ -16,4 +16,8 @@ class EarthFragment: Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_earth, container, false)
     }
+
+    companion object{
+        fun newInstance() = EarthFragment()
+    }
 }
