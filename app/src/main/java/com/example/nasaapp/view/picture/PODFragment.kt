@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import coil.api.load
 import com.example.nasaapp.R
 import com.example.nasaapp.databinding.FragmentMainBinding
-import com.example.nasaapp.repository.PODData
+import com.example.nasaapp.repository.responsedata.PODData
 import com.example.nasaapp.view.MainActivity
 import com.example.nasaapp.view.chips.SettingsFragment
 import com.example.nasaapp.viewLifeCycle
@@ -189,7 +189,7 @@ class PODFragment : Fragment() {
             is PODData.Loading -> {
                 binding.progressBar.visibility = View.VISIBLE
             }
-            is PODData.Success -> {
+            is PODData.Success  -> {
                 binding.progressBar.visibility = View.GONE
                 copyright = data.serverResponseData.copyright.toString()
                 date = data.serverResponseData.date.toString()

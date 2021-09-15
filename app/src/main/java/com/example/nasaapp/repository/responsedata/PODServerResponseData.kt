@@ -1,4 +1,4 @@
-package com.example.nasaapp.viewmodel
+package com.example.nasaapp.repository.responsedata
 
 import com.google.gson.annotations.SerializedName
 
