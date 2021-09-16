@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout"
+            style="@style/CustomOutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_wiki"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:layout_constraintBottom_toTopOf="@id/chip_image_chooser"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:helperText="@string/wiki_helper_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_image_chooser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:selectionRequired="true"
+            app:checkedChip="@id/chip_image_today"
+            app:layout_constraintBottom_toTopOf="@id/image_picture_of_the_date"
+            app:layout_constraintEnd_toStartOf="@id/chip_image_hd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_image_before_yesterday"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/before_yestarday"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_image_yesterday"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yesterday"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_image_today"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_image_hd"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hd"
+            app:layout_constraintBottom_toBottomOf="@+id/chip_image_chooser"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/chip_image_chooser" />
+
+
+        <com.example.nasaapp.view.CustomImageView
+            android:id="@+id/image_picture_of_the_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/photo_of_the_day_stub"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_no_photo_vector" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintTop_toTopOf="@id/image_picture_of_the_date"
+            app:layout_constraintBottom_toBottomOf="@id/image_picture_of_the_date"
+            app:layout_constraintStart_toStartOf="@id/image_picture_of_the_date"
+            app:layout_constraintEnd_toEndOf="@id/image_picture_of_the_date"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <include
+        android:id="@+id/included_bottom_sheet"
+        layout="@layout/bottom_sheet_layout" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabAlignmentMode="center"
+        app:fabAnimationMode="scale"
+        app:fabCradleMargin="5dp"
+        app:fabCradleRoundedCornerRadius="50dp"
+        app:fabCradleVerticalOffset="10dp"
+        app:hideOnScroll="true"
+        app:logo="@drawable/ic_archive"
+        app:logoDescription="logo"
+        app:navigationIcon="@drawable/ic_hamburger_menu_bottom_bar"
+        app:subtitle="subtitle" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:contentDescription="@string/fab_button_content_description"
+        app:borderWidth="5dp"
+        app:fabCustomSize="80dp"
+        app:layout_anchor="@id/bottom_app_bar"
+        app:srcCompat="@drawable/ic_plus_fab"
+        app:tint="#FFFFFF" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
