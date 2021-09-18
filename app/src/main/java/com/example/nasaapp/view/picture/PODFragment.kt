@@ -208,12 +208,12 @@ class PODFragment : Fragment() {
         binding.imagePictureOfTheDate.apply {
             if (binding.chipImageHd.isChecked) {
                 load(url) {
-                    placeholder(R.drawable.progress_image)
+                    placeholder(R.drawable.progress_animation)
                     error(R.drawable.ic_load_error_vector)
                 }
             } else {
                 load(hdurl) {
-                    placeholder(R.drawable.progress_image)
+                    placeholder(R.drawable.progress_animation)
                     error(R.drawable.ic_load_error_vector)
                 }
             }
