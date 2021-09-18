@@ -26,18 +26,7 @@ class ApiActivity : AppCompatActivity() {
                 2 -> tab.text = "OBJECT System"
             }
         }.attach()
-//
-//
-//
-//        binding.tabLayout.apply {
-//
-//
-//            getTabAt(0)?.customView = layoutInflater.inflate(R.layout.fragment_earth, null, false)
-//            getTabAt(1)?.customView = layoutInflater.inflate(R.layout.fragment_mars, null, false)
-//            getTabAt(2)?.customView = layoutInflater.inflate(R.layout.fragment_system, null, false)
-//
-//
-//        }
+
 
     }
 }

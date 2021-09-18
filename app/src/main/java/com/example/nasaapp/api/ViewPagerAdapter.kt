@@ -9,20 +9,6 @@ class ViewPagerAdapter(private val fragmentActivity: FragmentActivity) :
 
     private var fragments = arrayOf(EarthFragment(), MarsFragment(), SystemFragment())
 
-//    override fun getCount() = fragments.size
-
-//    override fun getPageTitle(position: Int): CharSequence? {
-//        return when(position){
-//            0 -> "Earth"
-//            1 -> "Mars"
-//            2 -> "System"
-//            else -> ""
-//        }
-//    }
-//
-//    override fun getItem(position: Int): Fragment {
-//        return fragments[position]
-//    }
 
     override fun getItemCount() = fragments.size
 
