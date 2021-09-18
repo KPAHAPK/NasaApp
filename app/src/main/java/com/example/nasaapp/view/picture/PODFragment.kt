@@ -189,7 +189,7 @@ class PODFragment : Fragment() {
             is PODData.Loading -> {
                 binding.progressBar.visibility = View.VISIBLE
             }
-            is PODData.Success  -> {
+            is PODData.Success -> {
                 binding.progressBar.visibility = View.GONE
                 copyright = data.serverResponseData.copyright.toString()
                 date = data.serverResponseData.date.toString()

@@ -11,25 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NasaApp">
+
         <activity
             android:name=".api.ApiBottomActivity"
-            android:exported="true" >
-
+            android:exported="true">
         </activity>
+
         <activity
             android:name=".api.ApiActivity"
             android:exported="true"
             android:theme="@style/Theme.NasaApp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
         <activity
             android:name=".view.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.NasaApp" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:theme="@style/Theme.NasaApp">
         </activity>
     </application>
 

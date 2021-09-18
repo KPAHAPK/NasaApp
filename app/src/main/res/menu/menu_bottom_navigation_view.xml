@@ -8,9 +8,9 @@
 
     <item
         android:id="@+id/bottom_view_mars"
-        app:tooltipText="Это Марс"
         android:icon="@drawable/ic_archive"
-        android:title="Mars" />
+        android:title="Mars"
+        app:tooltipText="Это Марс" />
 
     <item
         android:id="@+id/bottom_view_system"

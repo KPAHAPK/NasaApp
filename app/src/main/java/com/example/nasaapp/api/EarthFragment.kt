@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.nasaapp.R
 
-class EarthFragment: Fragment() {
+class EarthFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,7 +17,7 @@ class EarthFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_earth, container, false)
     }
 
-    companion object{
+    companion object {
         fun newInstance() = EarthFragment()
     }
 }

@@ -1,17 +1,15 @@
 package com.example.nasaapp.api
 
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import com.example.nasaapp.R
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class ViewPagerAdapter(private val fragmentManager: FragmentManager) :
-    FragmentStatePagerAdapter(fragmentManager) {
+class ViewPagerAdapter(private val fragmentActivity: FragmentActivity) :
+    FragmentStateAdapter(fragmentActivity) {
 
     private var fragments = arrayOf(EarthFragment(), MarsFragment(), SystemFragment())
 
-    override fun getCount() = fragments.size
+//    override fun getCount() = fragments.size
 
 //    override fun getPageTitle(position: Int): CharSequence? {
 //        return when(position){
@@ -21,8 +19,14 @@ class ViewPagerAdapter(private val fragmentManager: FragmentManager) :
 //            else -> ""
 //        }
 //    }
+//
+//    override fun getItem(position: Int): Fragment {
+//        return fragments[position]
+//    }
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItemCount() = fragments.size
+
+    override fun createFragment(position: Int): Fragment {
         return fragments[position]
     }
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.nasaapp.R
 
-class MarsFragment: Fragment() {
+class MarsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,7 +17,7 @@ class MarsFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_mars, container, false)
     }
 
-    companion object{
+    companion object {
         fun newInstance() = MarsFragment()
     }
 }

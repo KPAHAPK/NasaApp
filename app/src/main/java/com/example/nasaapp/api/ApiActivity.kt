@@ -1,12 +1,9 @@
 package com.example.nasaapp.api
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.iterator
-import com.example.nasaapp.R
 import com.example.nasaapp.databinding.ActivityApiBinding
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class ApiActivity : AppCompatActivity() {
@@ -19,28 +16,28 @@ class ApiActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.viewPager.apply {
-            adapter = ViewPagerAdapter(supportFragmentManager)
+            adapter = ViewPagerAdapter(this@ApiActivity)
         }
 
-        binding.tabLayout.apply {
-            setupWithViewPager(binding.viewPager)
-//            getTabAt(0)?.setIcon(android.R.drawable.alert_dark_frame)
-//            getTabAt(1)?.setIcon(android.R.drawable.btn_default)
-//            getTabAt(2)?.setIcon(android.R.drawable.arrow_down_float)
-
-            val frameLayoutInflate = layoutInflater.inflate(R.layout.activity_api_tablayout_item, null, false)
-
-            iterator().apply {
-                for (tab in this){
-                    if (this.hasNext()){
-                    }
-                }
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "OBJECT Mars"
+                1 -> tab.text = "OBJECT Earth"
+                2 -> tab.text = "OBJECT System"
             }
-
-            getTabAt(0)?.customView = layoutInflater.inflate(R.layout.activity_api_tablayout_item, null, false)
-
-
-        }
+        }.attach()
+//
+//
+//
+//        binding.tabLayout.apply {
+//
+//
+//            getTabAt(0)?.customView = layoutInflater.inflate(R.layout.fragment_earth, null, false)
+//            getTabAt(1)?.customView = layoutInflater.inflate(R.layout.fragment_mars, null, false)
+//            getTabAt(2)?.customView = layoutInflater.inflate(R.layout.fragment_system, null, false)
+//
+//
+//        }
 
     }
 }

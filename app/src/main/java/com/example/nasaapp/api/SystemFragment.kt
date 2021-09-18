@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.nasaapp.R
 
-class SystemFragment: Fragment() {
+class SystemFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,7 +17,7 @@ class SystemFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_system, container, false)
     }
 
-    companion object{
+    companion object {
         fun newInstance() = SystemFragment()
     }
 }

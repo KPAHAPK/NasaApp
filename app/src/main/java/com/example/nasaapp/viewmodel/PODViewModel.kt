@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.nasaapp.BuildConfig
 import com.example.nasaapp.R
-import com.example.nasaapp.repository.responsedata.PODServerResponseData
 import com.example.nasaapp.repository.responsedata.PODData
+import com.example.nasaapp.repository.responsedata.PODServerResponseData
 import com.example.nasaapp.repository.responsedata.SolarFlareData
 import com.example.nasaapp.repository.responsedata.SolarFlareServerResponseData
 import com.example.nasaapp.repository.retrofit.PODRetrofitImpl
@@ -44,11 +44,16 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
         } else {
             retrofitImpl.getPOD(date, apiKey, PODCallBack)
             retrofitImpl.getSolarFlareToday(startDate = "2021-09-07", apiKey, SolarFlareCallBack)
-            retrofitImpl.getSolarFlare(startDate = "2021-09-01", endDate = "2021-09-30", apiKey, SolarFlareCallBack)
+            retrofitImpl.getSolarFlare(
+                startDate = "2021-09-01",
+                endDate = "2021-09-30",
+                apiKey,
+                SolarFlareCallBack
+            )
         }
     }
 
-    private val PODCallBack =  object : Callback<PODServerResponseData> {
+    private val PODCallBack = object : Callback<PODServerResponseData> {
         override fun onResponse(
             call: Call<PODServerResponseData>,
             response: Response<PODServerResponseData>
@@ -59,7 +64,6 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
             } else {
-                //TODO Вывод номер ошибки и текста
                 val code = response.code()
                 val message = response.message()
                 liveDataToObserver.value =
@@ -78,7 +82,7 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    private val SolarFlareCallBack =  object : Callback<List<SolarFlareServerResponseData>> {
+    private val SolarFlareCallBack = object : Callback<List<SolarFlareServerResponseData>> {
         override fun onResponse(
             call: Call<List<SolarFlareServerResponseData>>,
             response: Response<List<SolarFlareServerResponseData>>
@@ -89,7 +93,6 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
             } else {
-                //TODO Вывод номер ошибки и текста
                 val code = response.code()
                 val message = response.message()
                 liveDataToObserver.value =
@@ -107,7 +110,6 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
         }
 
     }
-
 
 
 }
