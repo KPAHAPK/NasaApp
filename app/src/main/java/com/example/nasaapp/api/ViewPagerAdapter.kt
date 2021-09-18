@@ -9,7 +9,6 @@ class ViewPagerAdapter(private val fragmentActivity: FragmentActivity) :
 
     private var fragments = arrayOf(EarthFragment(), MarsFragment(), SystemFragment())
 
-
     override fun getItemCount() = fragments.size
 
     override fun createFragment(position: Int): Fragment {

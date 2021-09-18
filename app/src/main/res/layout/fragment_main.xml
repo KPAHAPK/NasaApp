@@ -87,16 +87,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_no_photo_vector" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="@id/image_picture_of_the_date"
-            app:layout_constraintEnd_toEndOf="@id/image_picture_of_the_date"
-            app:layout_constraintStart_toStartOf="@id/image_picture_of_the_date"
-            app:layout_constraintTop_toTopOf="@id/image_picture_of_the_date" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

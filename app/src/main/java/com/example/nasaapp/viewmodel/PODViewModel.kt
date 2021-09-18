@@ -29,7 +29,7 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
         return liveDataToObserver
     }
 
-    fun sendServerRequest(dayOffset: Int) {
+    fun sendServerRequest(dayOffset: Int = 0) {
         liveDataToObserver.postValue(PODData.Loading)
         val apiKey = BuildConfig.NASA_API_KEY
 

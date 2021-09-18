@@ -24,7 +24,7 @@ class PODRetrofitImpl {
     }
 
     fun getPOD(date: String, apiKey: String, podCallBack: Callback<PODServerResponseData>) {
-        api.getPOD(date, apiKey).enqueue(podCallBack)
+        api.getPOD(apiKey, date).enqueue(podCallBack)
     }
 
     fun getSolarFlareToday(
