@@ -49,7 +49,9 @@ class ApiBottomActivity : AppCompatActivity() {
             setOnItemReselectedListener { item ->
                 when (item.itemId) {
                     R.id.bottom_view_earth -> {
-                        //Item tapped
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.containerApi, LastSolarFlareFragment.newInstance())
+                            .commit()
                     }
                     R.id.bottom_view_mars -> {
                         //Item tapped

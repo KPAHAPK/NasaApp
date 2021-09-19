@@ -16,13 +16,6 @@ interface RetrofitApi {
     @GET("DONKI/FLR")
     fun getSolarFlare(
         @Query("api_key") apiKey: String,
-        @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
-    ): Call<List<SolarFlareServerResponseData>>
-
-    @GET("DONKI/FLR")
-    fun getSolarFlareToday(
-        @Query("api_key") apiKey: String,
         @Query("startDate") startDate: String
     ): Call<List<SolarFlareServerResponseData>>
 

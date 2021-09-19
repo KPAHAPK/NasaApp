@@ -19,5 +19,9 @@
     <string name="api_key_is_blank">API ключ пустой</string>
     <string name="theme_menu_title">Theme</string>
     <string name="title_theme_chooser">Выберите тему:</string>
+    <string name="solar_flare_begin_time">Время начала: %s</string>
+    <string name="solar_flare_end_time">Время конца: %s</string>
+    <string name="solar_flare_peak_time">Пиковое время: %s</string>
+    <string name="solar_flare_location">Местоположение: %s</string>
 
 </resources>

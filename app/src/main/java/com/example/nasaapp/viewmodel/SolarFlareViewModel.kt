@@ -7,8 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.nasaapp.BuildConfig
 import com.example.nasaapp.R
-import com.example.nasaapp.repository.responsedata.PODData
-import com.example.nasaapp.repository.responsedata.PODServerResponseData
 import com.example.nasaapp.repository.responsedata.SolarFlareData
 import com.example.nasaapp.repository.responsedata.SolarFlareServerResponseData
 import com.example.nasaapp.repository.retrofit.RetrofitImpl
@@ -18,49 +16,45 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-private const val TAG = "PODViewModel"
-
-class PODViewModel(application: Application) : AndroidViewModel(application) {
-    private val liveDataToObserver: MutableLiveData<PODData> = MutableLiveData()
+class SolarFlareViewModel(application: Application) : AndroidViewModel(application) {
+    private val liveDataToObserve: MutableLiveData<SolarFlareData> = MutableLiveData()
     private val retrofitImpl: RetrofitImpl = RetrofitImpl()
 
-    fun getLiveData(): LiveData<PODData> {
-        return liveDataToObserver
+    fun getLiveData(): LiveData<SolarFlareData> {
+        return liveDataToObserve
     }
 
-    fun sendServerRequestPOD(dayOffset: Int = 0) {
-        liveDataToObserver.postValue(PODData.Loading)
-        val apiKey = BuildConfig.NASA_API_KEY
+    fun sendServerRequestSolarFlare() {
+        liveDataToObserve.postValue(SolarFlareData.Loading)
+        val api = BuildConfig.NASA_API_KEY
 
         val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DATE, dayOffset)
+        calendar.add(Calendar.MONTH, -1)
         val pattern = "yyyy-MM-dd"
         val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
         val date = simpleDateFormat.format(calendar.time)
 
-        if (apiKey.isBlank()) {
+        if (api.isBlank()) {
             error(R.string.api_key_is_blank)
         } else {
-            retrofitImpl.getPOD(date, apiKey, PODCallBack)
+            retrofitImpl.getLastSolarFlare(date, api, LastSolarFlareCallBack)
         }
     }
 
-    private val PODCallBack = object : Callback<PODServerResponseData> {
+    private val LastSolarFlareCallBack = object : Callback<List<SolarFlareServerResponseData>> {
         override fun onResponse(
-            call: Call<PODServerResponseData>,
-            response: Response<PODServerResponseData>
+            call: Call<List<SolarFlareServerResponseData>>,
+            response: Response<List<SolarFlareServerResponseData>>
         ) {
             if (response.isSuccessful) {
                 response.body()?.let {
-                    liveDataToObserver.postValue(PODData.Success(it))
+                    liveDataToObserve.postValue(SolarFlareData.Success(it))
                 }
-
             } else {
                 val code = response.code()
                 val message = response.message()
-                liveDataToObserver.value =
-                    PODData.Error(Throwable("Error $code: $message"))
+                liveDataToObserve.value =
+                    SolarFlareData.Error(Throwable("Error $code: $message"))
                 Toast.makeText(
                     getApplication(),
                     "Error $code: $message",
@@ -69,8 +63,9 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-        override fun onFailure(call: Call<PODServerResponseData>, t: Throwable) {
-            liveDataToObserver.value = PODData.Error(Throwable(t))
+
+        override fun onFailure(call: Call<List<SolarFlareServerResponseData>>, t: Throwable) {
+            liveDataToObserve.value = SolarFlareData.Error(Throwable(t))
         }
 
     }

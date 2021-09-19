@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class PODRetrofitImpl {
+class RetrofitImpl {
 
 
     private val baseUrl = "https://api.nasa.gov/"
@@ -27,11 +27,11 @@ class PODRetrofitImpl {
         api.getPOD(apiKey, date).enqueue(podCallBack)
     }
 
-    fun getSolarFlareToday(
+    fun getLastSolarFlare(
         startDate: String,
         apiKey: String,
-        podCallBack: Callback<List<SolarFlareServerResponseData>>
+        solarFlareCallBack: Callback<List<SolarFlareServerResponseData>>
     ) {
-        api.getSolarFlareToday(apiKey, startDate).enqueue(podCallBack)
+        api.getSolarFlare(apiKey, startDate).enqueue(solarFlareCallBack)
     }
 }
