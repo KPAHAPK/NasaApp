@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3310810810810811" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_archive.xml" value="0.22135416666666666" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_baseline_play_circle_72.xml" value="0.3310810810810811" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.3310810810810811" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_load_error_vector.xml" value="0.18828828828828828" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_no_photo_vector.xml" value="0.2140625" />
@@ -36,6 +37,8 @@
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/fragment_chips.xml" value="0.22" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/fragment_earth.xml" value="0.25" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/fragment_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/fragment_main_end.xml" value="0.3171171171171171" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/fragment_main_start.xml" value="0.3171171171171171" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/fragment_mars.xml" value="0.3171171171171171" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/fragment_settings.xml" value="0.25" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/fragment_system.xml" value="0.3171171171171171" />
@@ -52,6 +55,7 @@
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/menu/menu_theme_changer.xml" value="0.3171171171171171" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/menu/menu_theme_chooser.xml" value="0.17747747747747747" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/menu/menu_theme_list.xml" value="0.3171171171171171" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/xml/motion_scene.xml" value="0.3171171171171171" />
       </map>
     </option>
   </component>

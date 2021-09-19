@@ -1,11 +1,13 @@
 package com.example.nasaapp.view.picture
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.nasaapp.R
+import com.example.nasaapp.api.ApiActivity
+import com.example.nasaapp.api.ApiBottomActivity
 import com.example.nasaapp.databinding.BottomNavigationLayoutBinding
 import com.example.nasaapp.viewLifeCycle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -29,13 +31,15 @@ class BottomNavigationDrawerPODFragment : BottomSheetDialogFragment() {
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_one -> {
-                    Toast.makeText(requireContext(), "На экран 1", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(requireContext(), ApiActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.navigation_two -> {
-                    Toast.makeText(requireContext(), "На экран 2", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(requireContext(), ApiBottomActivity::class.java)
+                    startActivity(intent)
                 }
-
             }
+            dismiss()
             true
         }
     }
