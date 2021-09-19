@@ -24,12 +24,13 @@ private const val TAG = "PODViewModel"
 class PODViewModel(application: Application) : AndroidViewModel(application) {
     private val liveDataToObserver: MutableLiveData<PODData> = MutableLiveData()
     private val retrofitImpl: PODRetrofitImpl = PODRetrofitImpl()
+    private var dayOffsetForSearchLastSolarFlare: Int = 0
 
     fun getLiveData(): LiveData<PODData> {
         return liveDataToObserver
     }
 
-    fun sendServerRequest(dayOffset: Int = 0) {
+    fun sendServerRequestPOD(dayOffset: Int = 0) {
         liveDataToObserver.postValue(PODData.Loading)
         val apiKey = BuildConfig.NASA_API_KEY
 
@@ -43,13 +44,23 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
             error(R.string.api_key_is_blank)
         } else {
             retrofitImpl.getPOD(date, apiKey, PODCallBack)
-            retrofitImpl.getSolarFlareToday(startDate = "2021-09-07", apiKey, SolarFlareCallBack)
-            retrofitImpl.getSolarFlare(
-                startDate = "2021-09-01",
-                endDate = "2021-09-30",
-                apiKey,
-                SolarFlareCallBack
-            )
+        }
+    }
+
+    fun sendServerRequestForLastSolarFlare() {
+        liveDataToObserver.postValue(SolarFlareData.Loading)
+        val apiKey = BuildConfig.NASA_API_KEY
+
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, dayOffsetForSearchLastSolarFlare)
+        val pattern = "yyyy-MM-dd"
+        val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+        val date = simpleDateFormat.format(calendar.time)
+
+        if (apiKey.isBlank()) {
+            error(R.string.api_key_is_blank)
+        } else {
+            retrofitImpl.getSolarFlareToday(date, apiKey, LastSolarFlareCallBack)
         }
     }
 
@@ -82,16 +93,19 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    private val SolarFlareCallBack = object : Callback<List<SolarFlareServerResponseData>> {
+    private val LastSolarFlareCallBack = object : Callback<List<SolarFlareServerResponseData>> {
         override fun onResponse(
             call: Call<List<SolarFlareServerResponseData>>,
             response: Response<List<SolarFlareServerResponseData>>
         ) {
             if (response.isSuccessful) {
-                response.body()?.let {
-                    liveDataToObserver.postValue(SolarFlareData.Success(it))
+                when (response.body()){
+                    null -> sendServerRequestForLastSolarFlare()
+                    else -> {
+                        liveDataToObserver.postValue(SolarFlareData.Success(response.body()!!))
+                        dayOffsetForSearchLastSolarFlare = 0
+                    }
                 }
-
             } else {
                 val code = response.code()
                 val message = response.message()
@@ -111,5 +125,31 @@ class PODViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
+    private val SolarFlareCallBack = object : Callback<List<SolarFlareServerResponseData>> {
+        override fun onResponse(
+            call: Call<List<SolarFlareServerResponseData>>,
+            response: Response<List<SolarFlareServerResponseData>>
+        ) {
+            if (response.isSuccessful) {
+                response.body()?.let{
+                    liveDataToObserver.postValue(SolarFlareData.Success(it))
+                }
+            } else {
+                val code = response.code()
+                val message = response.message()
+                liveDataToObserver.value =
+                    PODData.Error(Throwable("Error $code: $message"))
+                Toast.makeText(
+                    getApplication(),
+                    "Error $code: $message",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
+        override fun onFailure(call: Call<List<SolarFlareServerResponseData>>, t: Throwable) {
+            liveDataToObserver.value = PODData.Error(Throwable(t))
+        }
+
+    }
 }

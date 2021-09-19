@@ -95,7 +95,7 @@ class PODFragment : Fragment() {
             renderData(it)
         }
 
-        viewModelPOD.sendServerRequest(PODDayOffset)
+        viewModelPOD.sendServerRequestPOD(PODDayOffset)
 
 
         binding.inputLayout.setEndIconOnClickListener {
@@ -138,7 +138,7 @@ class PODFragment : Fragment() {
                             PODDayOffset = -2
                         }
                     }
-                    sendServerRequest(PODDayOffset)
+                    sendServerRequestPOD(PODDayOffset)
                 }
             }
         }
@@ -165,7 +165,7 @@ class PODFragment : Fragment() {
                 val errorSnackbar =
                     Snackbar.make(binding.root, R.string.retry_request, Snackbar.LENGTH_INDEFINITE)
                 errorSnackbar.setAction(R.string.snackbar_retry_message) {
-                    viewModelPOD.sendServerRequest(PODDayOffset)
+                    viewModelPOD.sendServerRequestPOD(PODDayOffset)
                 }
                 errorSnackbar.show()
             }

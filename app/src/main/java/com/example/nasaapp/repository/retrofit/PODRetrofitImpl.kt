@@ -28,19 +28,10 @@ class PODRetrofitImpl {
     }
 
     fun getSolarFlareToday(
-        startDate: String = "2021-09-07",
+        startDate: String,
         apiKey: String,
         podCallBack: Callback<List<SolarFlareServerResponseData>>
     ) {
         api.getSolarFlareToday(apiKey, startDate).enqueue(podCallBack)
-    }
-
-    fun getSolarFlare(
-        startDate: String = "2021-09-01",
-        endDate: String = "2021-09-30",
-        apiKey: String,
-        podCallBack: Callback<List<SolarFlareServerResponseData>>
-    ) {
-        api.getSolarFlare(apiKey, startDate, endDate).enqueue(podCallBack)
     }
 }

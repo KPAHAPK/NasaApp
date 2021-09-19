@@ -18,15 +18,13 @@ class ApiBottomActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.bottomNavigationView.apply {
-            selectedItemId = R.id.bottom_view_mars
-
             labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_SELECTED
 
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.bottom_view_earth -> {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.containerApi, EarthFragment.newInstance())
+                            .replace(R.id.containerApi, LastSolarFlareFragment.newInstance())
                             .commit()
                         true
                     }
@@ -45,6 +43,8 @@ class ApiBottomActivity : AppCompatActivity() {
                     else -> false
                 }
             }
+
+            selectedItemId = R.id.bottom_view_mars
 
             setOnItemReselectedListener { item ->
                 when (item.itemId) {
