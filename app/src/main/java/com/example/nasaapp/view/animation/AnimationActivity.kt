@@ -2,56 +2,57 @@ package com.example.nasaapp.view.animation
 
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.transition.ChangeBounds
-import androidx.transition.ChangeImageTransform
-import androidx.transition.TransitionManager
-import androidx.transition.TransitionSet
+import androidx.transition.*
 import com.example.nasaapp.databinding.ActivityAnimationEnlargeBinding
+import com.example.nasaapp.databinding.ActivityAnimationPathTransactionBinding
 
 class AnimationActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAnimationEnlargeBinding
+    private lateinit var binding: ActivityAnimationPathTransactionBinding
 
-    private var isExpanded = false
-
+    private var toRightAnimation = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAnimationEnlargeBinding.inflate(layoutInflater)
+        binding = ActivityAnimationPathTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.imageView.apply {
-            setOnClickListener {
-//                isExpanded = !isExpanded
-//                val set = TransitionSet()
-//                    .addTransition(ChangeBounds())
-//                    .addTransition(ChangeImageTransform())
+//        binding.button.setOnClickListener {
+//            val changeBounds = ChangeBounds()
+//            changeBounds.setPathMotion(ArcMotion())
+//            changeBounds.duration = 500
+//            TransitionManager.beginDelayedTransition(
+//                binding.transitionsContainer,
+//                changeBounds
+//            )
 //
-//                scaleType = if (isExpanded) {
-//                    ImageView.ScaleType.CENTER_CROP
-//                } else {
-//                    ImageView.ScaleType.FIT_CENTER
-//                }
-//                TransitionManager.beginDelayedTransition(binding.container, set)
-//            }
+//            toRightAnimation = !toRightAnimation
+//            val params = binding.button.layoutParams as FrameLayout.LayoutParams
+//            params.gravity =
+//                if (toRightAnimation) Gravity.END or Gravity.BOTTOM else Gravity.START or Gravity.TOP
+//            binding.button.layoutParams = params
+//        }
+        binding.button.apply {
+            setOnClickListener{
+                toRightAnimation = !toRightAnimation
+                val changeBounds = ChangeBounds()
+                changeBounds.setPathMotion(ArcMotion())
+                changeBounds.duration = 2000
+                TransitionManager.beginDelayedTransition(binding.transitionsContainer, changeBounds)
 
-                isExpanded = !isExpanded
-                TransitionManager.beginDelayedTransition(
-                    binding.container, TransitionSet()
-                        .addTransition(ChangeBounds())
-                        .addTransition(ChangeImageTransform())
-                )
-
-                val params: ViewGroup.LayoutParams = binding.imageView.layoutParams
-                params.height =
-                    if (isExpanded) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT
-                binding.imageView.layoutParams = params
-                binding.imageView.scaleType =
-                    if (isExpanded) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.FIT_CENTER
+                val params = binding.button.layoutParams as FrameLayout.LayoutParams
+                params.gravity = if (toRightAnimation){
+                   Gravity.END or Gravity.BOTTOM
+                }else{
+                    Gravity.TOP or Gravity.START
+                }
+                binding.button.layoutParams = params
             }
-
         }
     }
+
 }
