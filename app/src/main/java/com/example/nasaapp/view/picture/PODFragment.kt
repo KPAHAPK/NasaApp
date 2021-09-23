@@ -14,7 +14,7 @@ import com.example.nasaapp.R
 import com.example.nasaapp.databinding.FragmentMainBinding
 import com.example.nasaapp.repository.PODData
 import com.example.nasaapp.view.MainActivity
-import com.example.nasaapp.view.chips.ChipsFragment
+import com.example.nasaapp.view.chips.SettingsFragment
 import com.example.nasaapp.viewLifeCycle
 import com.example.nasaapp.viewmodel.PODViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -34,13 +34,13 @@ class PODFragment : Fragment() {
 
     private var PODDayOffset: Int = 0
 
-    private lateinit var copyright: String
-    private lateinit var date: String
-    private lateinit var explanation: String
-    private lateinit var mediaType: String
-    private lateinit var title: String
-    private lateinit var url: String
-    private lateinit var hdurl: String
+    private var copyright: String? = null
+    private var date: String? = null
+    private var explanation: String? = null
+    private var mediaType: String? = null
+    private var title: String? = null
+    private var url: String? = null
+    private var hdurl: String? = null
 
 
     override fun onCreateView(
@@ -151,6 +151,7 @@ class PODFragment : Fragment() {
                 }
             }
         }
+
     }
 
     private fun setBottomSheetBehaviour(bottomSheet: ConstraintLayout) {
@@ -232,17 +233,14 @@ class PODFragment : Fragment() {
             R.id.app_bar_settings -> {
                 Toast.makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, ChipsFragment.newInstance())
+                    .replace(R.id.container, SettingsFragment.newInstance())
                     .addToBackStack("")
                     .commit()
-            }
-            R.id.app_bar_search -> {
-                Toast.makeText(requireContext(), R.string.search, Toast.LENGTH_SHORT).show()
             }
             android.R.id.home -> {
                 Toast.makeText(requireContext(), R.string.home, Toast.LENGTH_SHORT).show()
                 activity?.let {
-                    BottomNavigationDrawerFragment().show(it.supportFragmentManager, "")
+                    BottomNavigationDrawerPODFragment().show(it.supportFragmentManager, "")
                 }
             }
         }

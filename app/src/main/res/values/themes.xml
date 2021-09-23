@@ -1,26 +1,119 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.NasaApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorSecondaryVariant">#0039CB</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorError">#F44336</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#212121</item>
+        <item name="colorOnBackground">#212121</item>
+        <item name="textOutlineColor">@color/red</item>
+        <item name="shapeAppearanceLargeComponent">@style/myShapeAppearanceLarge</item>
+        <item name="shapeAppearanceSmallComponent">@style/myShapeAppearanceSmall</item>
+        <item name="shapeAppearanceMediumComponent">@style/myShapeAppearanceMedium</item>
+        <item name="shapeAppearanceOverlay">@style/myShapeOverlay</item>
+        <item name="materialCardViewStyle">@style/myCardViewStyle</item>
+
     </style>
+
+    <style name="Theme.NasaApp.myBlueTheme">
+        <item name="colorPrimary">#0d47a1</item>
+        <item name="colorPrimaryVariant">#002171</item>
+        <item name="colorSecondary">#ffeb3b</item>
+        <item name="colorSecondaryVariant">#c8b900</item>
+    </style>
+
+    <style name="Theme.NasaApp.myLimeTheme">
+        <item name="colorPrimary">#c6ff00</item>
+        <item name="colorPrimaryVariant">#90cc00</item>
+        <item name="colorSecondary">#ffc400</item>
+        <item name="colorSecondaryVariant">#c79400</item>
+    </style>
+
+    <style name="Theme.NasaApp.myFuchsiaTheme">
+        <item name="colorPrimary">#d500f9</item>
+        <item name="colorPrimaryVariant">#9e00c5</item>
+        <item name="colorSecondary">#3d5afe</item>
+        <item name="colorSecondaryVariant">#0031ca</item>
+    </style>
+
+
+    <style name="Theme.NasaApp.myMaroonTheme">
+        <item name="colorPrimary">#b71c1c</item>
+        <item name="colorPrimaryVariant">#7f0000</item>
+        <item name="colorSecondary">#9c27b0</item>
+        <item name="colorSecondaryVariant">#6a0080</item>
+    </style>
+
+
+    <style name="Theme.NasaApp.myOliveTheme">
+        <item name="colorPrimary">#827717</item>
+        <item name="colorPrimaryVariant">#524c00</item>
+        <item name="colorSecondary">#f57f17</item>
+        <item name="colorSecondaryVariant">#bc5100</item>
+    </style>
+
+
+    <style name="Theme.NasaApp.myNavyTheme">
+        <item name="colorPrimary">#1a237e</item>
+        <item name="colorPrimaryVariant">#000051</item>
+        <item name="colorSecondary">#76ff03</item>
+        <item name="colorSecondaryVariant">#32cb00</item>
+    </style>
+
+    <style name="Theme.NasaApp.myAquaTheme">
+        <item name="colorPrimary">#18ffff</item>
+        <item name="colorPrimaryVariant">#00cbcc</item>
+        <item name="colorSecondary">#00bcd4</item>
+        <item name="colorSecondaryVariant">#008ba3</item>
+    </style>
+
 
     <style name="CustomOutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="counterEnabled">false</item>
         <item name="counterOverflowTextColor">@color/colorPrimary</item>
-        <item name="boxStrokeColor">@color/navy</item>
-        <item name="boxStrokeErrorColor">@color/lime</item>
+        <item name="boxStrokeColor">?attr/textOutlineColor</item>
         <!--        <item name="passwordToggleEnabled">true</item>-->
         <item name="endIconMode">custom</item>
         <item name="endIconDrawable">@drawable/ic_wikipedia</item>
+
     </style>
+
+    <style name="myShapeAppearanceLarge" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="chipCornerRadius">10dp</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="myShapeAppearanceSmall" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="chipCornerRadius">5dp</item>
+    </style>
+
+    <style name="myShapeAppearanceMedium" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="chipCornerRadius">10dp</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="myShapeOverlay" parent="ShapeAppearanceOverlay.MaterialComponents.Chip">
+        <item name="cornerFamily">rounded</item>
+        <item name="chipCornerRadius">5dp</item>
+        <item name="cornerSize">20%</item>
+    </style>
+
+    <style name="myCardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/lime</item>
+        <item name="cardCornerRadius">60dp</item>
+        <item name="cardElevation">5dp</item>
+    </style>
+
+
 </resources>
