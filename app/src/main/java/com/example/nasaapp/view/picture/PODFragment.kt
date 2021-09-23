@@ -1,14 +1,18 @@
 package com.example.nasaapp.view.picture
 
+import android.animation.AnimatorInflater
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AnticipateOvershootInterpolator
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.*
 import coil.api.load
 import com.example.nasaapp.R
 import com.example.nasaapp.databinding.FragmentMainStartBinding
@@ -41,7 +45,6 @@ class PODFragment : Fragment() {
     private var title: String? = null
     private var url: String? = null
     private var hdurl: String? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,10 +97,37 @@ class PODFragment : Fragment() {
         viewModelPOD.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-
         viewModelPOD.sendServerRequestPOD(PODDayOffset)
 
+        setWikiSearchOnClick()
+        setBottomSheetBehaviour(binding.includedBottomSheet.bottomSheetContainer)
 
+        setChipsPODListener()
+
+
+        var isExpanded = false
+        binding.imagePictureOfTheDate.setOnClickListener {
+            isExpanded = !isExpanded
+            val changeBounds = ChangeBounds()
+            changeBounds.resizeClip = true
+
+            val set = TransitionSet()
+                .addTransition(changeBounds)
+                .addTransition(ChangeImageTransform())
+            set.interpolator = AnticipateOvershootInterpolator(2.0f)
+
+            TransitionManager.beginDelayedTransition(binding.container, set)
+
+            val param: ViewGroup.LayoutParams = it.layoutParams
+            param.height =
+                if (isExpanded) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT
+            it.layoutParams = param
+            binding.imagePictureOfTheDate.scaleType =
+                if (isExpanded) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.FIT_CENTER
+        }
+    }
+
+    private fun setWikiSearchOnClick() {
         binding.inputLayout.setEndIconOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data =
@@ -110,19 +140,23 @@ class PODFragment : Fragment() {
             }
             startActivity(intent)
         }
-        setBottomSheetBehaviour(binding.includedBottomSheet.bottomSheetContainer)
-        setChipPODListener()
-
     }
 
-    private fun setChipPODListener() {
-        var lastCheckedId = View.NO_ID
+    private fun setBottomSheetBehaviour(bottomSheet: ConstraintLayout) {
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
+
+    private fun setChipsPODListener() {
         binding.chipImageChooser.setOnCheckedChangeListener { group, checkedId ->
+            var lastCheckedId = View.NO_ID
             if (checkedId == View.NO_ID) {
                 group.check(lastCheckedId)
                 return@setOnCheckedChangeListener
             }
             lastCheckedId = checkedId
+
+
 
             val chip: Chip? = group.findViewById(lastCheckedId)
             chip?.let {
@@ -138,6 +172,11 @@ class PODFragment : Fragment() {
                             PODDayOffset = -2
                         }
                     }
+                    val chipAnimator = AnimatorInflater.loadAnimator(requireContext(), R.animator.chip_animator)
+                    val scale = requireContext().resources.displayMetrics.density
+                    chip.cameraDistance = 8000 * scale
+                    chipAnimator.setTarget(chip)
+                    chipAnimator.start()
                     sendServerRequestPOD(PODDayOffset)
                 }
             }
@@ -154,10 +193,6 @@ class PODFragment : Fragment() {
 
     }
 
-    private fun setBottomSheetBehaviour(bottomSheet: ConstraintLayout) {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-    }
 
     private fun renderData(data: PODData) {
         when (data) {

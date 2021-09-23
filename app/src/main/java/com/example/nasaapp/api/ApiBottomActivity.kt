@@ -17,6 +17,7 @@ class ApiBottomActivity : AppCompatActivity() {
         binding = ActivityApiBottomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         binding.bottomNavigationView.apply {
             labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_SELECTED
 

@@ -1,5 +1,6 @@
 package com.example.nasaapp.view.picture
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,7 +33,8 @@ class BottomNavigationDrawerPODFragment : BottomSheetDialogFragment() {
             when (item.itemId) {
                 R.id.navigation_one -> {
                     val intent = Intent(requireContext(), ApiActivity::class.java)
-                    startActivity(intent)
+                    val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(),null, "" )
+                    startActivity(intent, options.toBundle())
                 }
                 R.id.navigation_two -> {
                     val intent = Intent(requireContext(), ApiBottomActivity::class.java)
