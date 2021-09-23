@@ -20,6 +20,7 @@
         <item name="shapeAppearanceMediumComponent">@style/myShapeAppearanceMedium</item>
         <item name="shapeAppearanceOverlay">@style/myShapeOverlay</item>
         <item name="materialCardViewStyle">@style/myCardViewStyle</item>
+        <!--        <item name="bottomNavigationStyle">@id/myBottomNavigationView</item>-->
 
     </style>
 
@@ -113,6 +114,10 @@
         <item name="cardBackgroundColor">@color/lime</item>
         <item name="cardCornerRadius">60dp</item>
         <item name="cardElevation">5dp</item>
+    </style>
+
+    <style name="myBottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="background">@drawable/ic_launcher_background</item>
     </style>
 
 

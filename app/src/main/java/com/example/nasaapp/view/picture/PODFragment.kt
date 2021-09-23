@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import coil.api.load
 import com.example.nasaapp.R
 import com.example.nasaapp.databinding.FragmentMainBinding
-import com.example.nasaapp.repository.PODData
+import com.example.nasaapp.repository.responsedata.PODData
 import com.example.nasaapp.view.MainActivity
 import com.example.nasaapp.view.chips.SettingsFragment
 import com.example.nasaapp.viewLifeCycle
@@ -143,9 +143,9 @@ class PODFragment : Fragment() {
             }
         }
 
-        binding.chipImageHd.setOnCheckedChangeListener { compoundButton, b ->
+        binding.chipImageHd.setOnCheckedChangeListener { _, isChecked ->
             binding.imagePictureOfTheDate.apply {
-                when (b) {
+                when (isChecked) {
                     true -> load(hdurl)
                     false -> load(url)
                 }
@@ -178,7 +178,7 @@ class PODFragment : Fragment() {
 
     private fun renderData(data: PODData) {
         when (data) {
-            is PODData.Error -> {//TODO HW
+            is PODData.Error -> {
                 val errorSnackbar =
                     Snackbar.make(binding.root, R.string.retry_request, Snackbar.LENGTH_INDEFINITE)
                 errorSnackbar.setAction(R.string.snackbar_retry_message) {
@@ -187,10 +187,11 @@ class PODFragment : Fragment() {
                 errorSnackbar.show()
             }
             is PODData.Loading -> {
-                binding.progressBar.visibility = View.VISIBLE
+                binding.imagePictureOfTheDate.load(R.drawable.progress_animation) {
+                    error(R.drawable.ic_load_error_vector)
+                }
             }
             is PODData.Success -> {
-                binding.progressBar.visibility = View.GONE
                 copyright = data.serverResponseData.copyright.toString()
                 date = data.serverResponseData.date.toString()
                 explanation = data.serverResponseData.explanation.toString()
@@ -207,10 +208,12 @@ class PODFragment : Fragment() {
         binding.imagePictureOfTheDate.apply {
             if (binding.chipImageHd.isChecked) {
                 load(url) {
+                    placeholder(R.drawable.progress_image)
                     error(R.drawable.ic_load_error_vector)
                 }
             } else {
                 load(hdurl) {
+                    placeholder(R.drawable.progress_image)
                     error(R.drawable.ic_load_error_vector)
                 }
             }
