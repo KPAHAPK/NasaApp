@@ -4,8 +4,10 @@ import android.animation.AnimatorInflater
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.transition.Transition
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +52,7 @@ class PODFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainStartBinding.inflate(inflater)
         val view = binding.root
         setAppBar()
@@ -157,7 +159,6 @@ class PODFragment : Fragment() {
             lastCheckedId = checkedId
 
 
-
             val chip: Chip? = group.findViewById(lastCheckedId)
             chip?.let {
                 viewModelPOD.apply {
@@ -172,7 +173,8 @@ class PODFragment : Fragment() {
                             PODDayOffset = -2
                         }
                     }
-                    val chipAnimator = AnimatorInflater.loadAnimator(requireContext(), R.animator.chip_animator)
+                    val chipAnimator =
+                        AnimatorInflater.loadAnimator(requireContext(), R.animator.chip_animator)
                     val scale = requireContext().resources.displayMetrics.density
                     chip.cameraDistance = 8000 * scale
                     chipAnimator.setTarget(chip)
@@ -206,6 +208,7 @@ class PODFragment : Fragment() {
             }
             is PODData.Loading -> {
                 binding.playVideoOfTheDay.visibility = View.INVISIBLE
+
                 binding.imagePictureOfTheDate.load(R.drawable.progress_animation) {
                     error(R.drawable.ic_load_error_vector)
                 }
@@ -289,6 +292,17 @@ class PODFragment : Fragment() {
             }
         }
         return true
+    }
+
+    private fun setStartActivityAnimation() {
+        val slide = Slide()
+        slide.slideEdge = Gravity.START
+        slide.duration = 400
+        slide.interpolator = (DecelerateInterpolator())
+        val set = TransitionSet()
+            .addTransition(slide)
+            .clone()
+        TransitionManager.beginDelayedTransition(binding.root, set)
     }
 
     companion object {

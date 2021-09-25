@@ -21,9 +21,9 @@ class ApiActivity : AppCompatActivity() {
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "OBJECT Mars"
-                1 -> tab.text = "OBJECT Earth"
-                2 -> tab.text = "OBJECT System"
+                0 -> tab.text = "OBJECT System"
+                1 -> tab.text = "OBJECT Mars"
+                2 -> tab.text = "OBJECT Earth"
             }
         }.attach()
 

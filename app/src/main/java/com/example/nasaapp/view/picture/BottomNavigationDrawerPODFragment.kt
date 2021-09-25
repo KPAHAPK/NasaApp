@@ -1,11 +1,12 @@
 package com.example.nasaapp.view.picture
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import com.example.nasaapp.R
 import com.example.nasaapp.api.ApiActivity
 import com.example.nasaapp.api.ApiBottomActivity
@@ -32,13 +33,20 @@ class BottomNavigationDrawerPODFragment : BottomSheetDialogFragment() {
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_one -> {
-                    val intent = Intent(requireContext(), ApiActivity::class.java)
-                    val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(),null, "" )
+                    val intent = Intent(requireContext(), ApiBottomActivity::class.java)
+//                  val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(),
+//                  Pair.create(binding.navigationView, "screen2"))
+                    val viewSource = view.findViewById<View>(R.id.navigation_one)
+                    val coordinateX = viewSource.x.toInt()
+                    val coordinateY = viewSource.y.toInt()
+                    val options = ActivityOptionsCompat.makeScaleUpAnimation (viewSource,coordinateX,coordinateY,10000,10000)
                     startActivity(intent, options.toBundle())
                 }
                 R.id.navigation_two -> {
-                    val intent = Intent(requireContext(), ApiBottomActivity::class.java)
-                    startActivity(intent)
+                    val intent = Intent(requireContext(), ApiActivity::class.java)
+                    val viewSource = binding.navigationView
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation (requireActivity(), Pair(viewSource, "screen2"))
+                    startActivity(intent, options.toBundle())
                 }
             }
             dismiss()
