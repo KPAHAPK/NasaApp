@@ -4,7 +4,6 @@ import android.animation.AnimatorInflater
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.transition.Transition
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -106,9 +105,12 @@ class PODFragment : Fragment() {
 
         setChipsPODListener()
 
+        setImageScaleAnimation(binding.imagePictureOfTheDate)
+    }
 
+    private fun setImageScaleAnimation(imageView: ImageView) {
         var isExpanded = false
-        binding.imagePictureOfTheDate.setOnClickListener {
+        imageView.setOnClickListener {
             isExpanded = !isExpanded
             val changeBounds = ChangeBounds()
             changeBounds.resizeClip = true
@@ -118,7 +120,7 @@ class PODFragment : Fragment() {
                 .addTransition(ChangeImageTransform())
             set.interpolator = AnticipateOvershootInterpolator(2.0f)
 
-            TransitionManager.beginDelayedTransition(binding.container, set)
+            TransitionManager.beginDelayedTransition(binding.mainContainer, set)
 
             val param: ViewGroup.LayoutParams = it.layoutParams
             param.height =
@@ -173,12 +175,7 @@ class PODFragment : Fragment() {
                             PODDayOffset = -2
                         }
                     }
-                    val chipAnimator =
-                        AnimatorInflater.loadAnimator(requireContext(), R.animator.chip_animator)
-                    val scale = requireContext().resources.displayMetrics.density
-                    chip.cameraDistance = 8000 * scale
-                    chipAnimator.setTarget(chip)
-                    chipAnimator.start()
+                    setRotateViewAnimation(chip)
                     sendServerRequestPOD(PODDayOffset)
                 }
             }
@@ -193,6 +190,15 @@ class PODFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun setRotateViewAnimation(view: View) {
+        val viewAnimator =
+            AnimatorInflater.loadAnimator(requireContext(), R.animator.chip_animator)
+        val scale = requireContext().resources.displayMetrics.density
+        view.cameraDistance = 8000 * scale
+        viewAnimator.setTarget(view)
+        viewAnimator.start()
     }
 
 
@@ -278,11 +284,11 @@ class PODFragment : Fragment() {
                 Toast.makeText(requireContext(), R.string.favourite, Toast.LENGTH_SHORT).show()
             }
             R.id.app_bar_settings -> {
-                Toast.makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT).show()
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, SettingsFragment.newInstance())
+                val settingFragment = requireActivity().supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.fragment_in, R.anim.fragment_out)
+                    .replace(R.id.main_container, SettingsFragment.newInstance())
                     .addToBackStack("")
-                    .commit()
+                settingFragment.commit()
             }
             android.R.id.home -> {
                 Toast.makeText(requireContext(), R.string.home, Toast.LENGTH_SHORT).show()
