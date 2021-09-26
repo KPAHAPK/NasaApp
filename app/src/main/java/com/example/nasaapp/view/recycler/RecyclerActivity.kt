@@ -15,9 +15,9 @@ class RecyclerActivity : AppCompatActivity() {
         binding = ActivityRecyclerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data = mutableListOf<Data>()
-        data.add(0, Data("Header"))
-        data.add(Data("Footer"))
+        val data = mutableListOf<Pair<Data, Boolean>>()
+        data.add(Data("Header") to false)
+        data.add(Data("Footer") to false)
 
         val adapter = RecyclerActivityAdapter(
             object : OnListItemClickListener {

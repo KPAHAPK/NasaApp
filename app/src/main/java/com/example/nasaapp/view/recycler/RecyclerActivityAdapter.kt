@@ -11,7 +11,7 @@ import com.example.nasaapp.databinding.ActivityRecyclerItemMarsBinding
 
 class RecyclerActivityAdapter(
     private var onListItemClickListener: OnListItemClickListener,
-    private var data: MutableList<Data>
+    private var data: MutableList<Pair<Data, Boolean>>
 ) : RecyclerView.Adapter<BaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -62,7 +62,7 @@ class RecyclerActivityAdapter(
             0 -> TYPE_HEADER
             data.lastIndex -> TYPE_FOOTER
             else -> {
-                when (data[position].someDescription.isBlank()) {
+                when (data[position].first.someDescription.isBlank()) {
                     true -> TYPE_MARS
                     else -> TYPE_EARTH
                 }
@@ -80,22 +80,28 @@ class RecyclerActivityAdapter(
     }
 
     inner class EarthViewHolder(view: View) : BaseViewHolder(view) {
-        override fun bind(data: Data) {
+        override fun bind(pairData: Pair<Data, Boolean>) {
             ActivityRecyclerItemEarthBinding.bind(itemView).apply {
-                descriptionTextView.text = data.someDescription
+                descriptionTextView.text = pairData.first.someDescription
                 wikiImageView.setOnClickListener {
-                    onListItemClickListener.onItemClick(data)
+                    onListItemClickListener.onItemClick(pairData.first)
                 }
             }
         }
     }
 
+    private var lastToggledItem: Int = -1
     inner class MarsViewHolder(view: View) : BaseViewHolder(view) {
-        override fun bind(data: Data) {
+        override fun bind(pairData: Pair<Data, Boolean>) {
             ActivityRecyclerItemMarsBinding.bind(itemView).apply {
-                marsTextView.text = data.someText
+                marsTextView.apply {
+                    text = pairData.first.someText
+                    setOnClickListener {
+                        toggleText()
+                    }
+                }
                 marsImageView.setOnClickListener {
-                    onListItemClickListener.onItemClick(data)
+                    onListItemClickListener.onItemClick(pairData.first)
                 }
                 addItemImageView.setOnClickListener {
                     addItem()
@@ -110,7 +116,29 @@ class RecyclerActivityAdapter(
                 moveItemDown.setOnClickListener {
                     moveDown()
                 }
+                marsDescriptionTextView.visibility =
+                    if (pairData.second) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
             }
+        }
+
+
+        private fun toggleText() {
+            lastToggledItem.takeIf { it >= 0 }?.apply {
+                data[this] = data[this].let {
+                    it.first to !it.second
+                }
+                notifyItemChanged(lastToggledItem)
+            }
+
+            data[layoutPosition] = data[layoutPosition].let{
+                it.first to !it.second
+            }
+            lastToggledItem = layoutPosition
+            notifyItemChanged(layoutPosition)
         }
 
         private fun moveUp() {
@@ -132,7 +160,7 @@ class RecyclerActivityAdapter(
         }
 
         private fun addItem() {
-            data.add(layoutPosition, generateItem())
+            data.add(layoutPosition, generateItem() to false)
             notifyItemInserted(layoutPosition)
             notifyItemRangeChanged(layoutPosition + 1, data.size - 1)
         }
@@ -145,20 +173,20 @@ class RecyclerActivityAdapter(
     }
 
     inner class HeaderViewHolder(view: View) : BaseViewHolder(view) {
-        override fun bind(data: Data) {
+        override fun bind(pairData: Pair<Data, Boolean>) {
             ActivityRecyclerItemHeaderBinding.bind(itemView).apply {
                 root.setOnClickListener {
-                    onListItemClickListener.onItemClick(data)
+                    onListItemClickListener.onItemClick(pairData.first)
                 }
             }
         }
     }
 
     inner class FooterViewHolder(view: View) : BaseViewHolder(view) {
-        override fun bind(data: Data) {
+        override fun bind(pairData: Pair<Data, Boolean>) {
             ActivityRecyclerItemFooterBinding.bind(itemView).apply {
                 footer.setOnClickListener {
-                    onListItemClickListener.onItemClick(data)
+                    onListItemClickListener.onItemClick(pairData.first)
                 }
             }
         }
@@ -167,7 +195,7 @@ class RecyclerActivityAdapter(
 
     fun appendItem() {
         val insertPosition = data.lastIndex
-        data.add(insertPosition, generateItem())
+        data.add(insertPosition, generateItem() to false)
         notifyItemInserted(insertPosition + 1)
     }
 
