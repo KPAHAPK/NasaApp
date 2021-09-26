@@ -22,7 +22,7 @@
         <item name="materialCardViewStyle">@style/myCardViewStyle</item>
         <item name="android:windowContentTransitions">true</item>
 
-<!--                <item name="bottomNavigationStyle">@id/myBottomNavigationView</item>-->
+        <!--                <item name="bottomNavigationStyle">@id/myBottomNavigationView</item>-->
 
     </style>
 

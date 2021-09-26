@@ -9,6 +9,6 @@
             android:id="@+id/navigation_two"
             android:icon="@drawable/ic_send"
             android:title="На экран 2"
-            android:transitionName="screen2"/>
+            android:transitionName="screen2" />
     </group>
 </menu>

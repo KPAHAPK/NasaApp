@@ -9,8 +9,7 @@
         android:startOffset="@android:integer/config_mediumAnimTime"
         android:toXScale="100%p"
         android:toYScale="100%p" />
-    <set
-        android:duration="@android:integer/config_mediumAnimTime">
+    <set android:duration="@android:integer/config_mediumAnimTime">
         <alpha
             android:fromAlpha=".5"
             android:toAlpha="1" />

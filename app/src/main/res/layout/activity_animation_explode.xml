@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-    tools:listitem="@layout/activity_animation_explode_list_item"
-    app:spanCount="4">
+    app:spanCount="4"
+    tools:listitem="@layout/activity_animation_explode_list_item">
 
 </androidx.recyclerview.widget.RecyclerView>
