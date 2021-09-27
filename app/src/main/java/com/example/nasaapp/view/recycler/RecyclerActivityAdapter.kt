@@ -1,8 +1,10 @@
 package com.example.nasaapp.view.recycler
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nasaapp.databinding.ActivityRecyclerItemEarthBinding
 import com.example.nasaapp.databinding.ActivityRecyclerItemFooterBinding
@@ -11,8 +13,16 @@ import com.example.nasaapp.databinding.ActivityRecyclerItemMarsBinding
 
 class RecyclerActivityAdapter(
     private var onListItemClickListener: OnListItemClickListener,
+    private var onStartDragListener: OnStartDragListener,
     private var data: MutableList<Pair<Data, Boolean>>
 ) : RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
+
+    companion object {
+        private const val TYPE_EARTH = 0
+        private const val TYPE_MARS = 1
+        private const val TYPE_HEADER = 2
+        private const val TYPE_FOOTER = 3
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -123,6 +133,13 @@ class RecyclerActivityAdapter(
                     } else {
                         View.GONE
                     }
+
+                dragHandleImageView.setOnTouchListener { view, motionEvent ->
+                    if (MotionEventCompat.getActionMasked(motionEvent) == MotionEvent.ACTION_DOWN){
+                        onStartDragListener.onStartDrag(this@MarsViewHolder)
+                    }
+                    false
+                }
             }
         }
 
@@ -215,12 +232,6 @@ class RecyclerActivityAdapter(
         }
     }
 
-    companion object {
-        private const val TYPE_EARTH = 0
-        private const val TYPE_MARS = 1
-        private const val TYPE_HEADER = 2
-        private const val TYPE_FOOTER = 3
-    }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         if (fromPosition != 0 && fromPosition != data.lastIndex && toPosition != 0 && toPosition != data.lastIndex) {
