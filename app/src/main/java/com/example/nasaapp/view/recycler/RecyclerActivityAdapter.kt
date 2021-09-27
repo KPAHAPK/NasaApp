@@ -12,7 +12,7 @@ import com.example.nasaapp.databinding.ActivityRecyclerItemMarsBinding
 class RecyclerActivityAdapter(
     private var onListItemClickListener: OnListItemClickListener,
     private var data: MutableList<Pair<Data, Boolean>>
-) : RecyclerView.Adapter<BaseViewHolder>() {
+) : RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -91,6 +91,7 @@ class RecyclerActivityAdapter(
     }
 
     private var lastToggledItem: Int = -1
+
     inner class MarsViewHolder(view: View) : BaseViewHolder(view) {
         override fun bind(pairData: Pair<Data, Boolean>) {
             ActivityRecyclerItemMarsBinding.bind(itemView).apply {
@@ -125,19 +126,23 @@ class RecyclerActivityAdapter(
             }
         }
 
-
         private fun toggleText() {
-            lastToggledItem.takeIf { it >= 0 }?.apply {
-                data[this] = data[this].let {
-                    it.first to !it.second
-                }
-                notifyItemChanged(lastToggledItem)
-            }
-
-            data[layoutPosition] = data[layoutPosition].let{
+            data[layoutPosition] = data[layoutPosition].let {
                 it.first to !it.second
             }
-            lastToggledItem = layoutPosition
+
+            val isTheSamePosition = lastToggledItem == layoutPosition
+            if (isTheSamePosition) {
+                lastToggledItem = View.NO_ID
+            } else {
+                lastToggledItem.takeIf { it >= 0 }?.apply {
+                    data[this] = data[this].let {
+                        it.first to !it.second
+                    }
+                    notifyItemChanged(lastToggledItem)
+                }
+                lastToggledItem = layoutPosition
+            }
             notifyItemChanged(layoutPosition)
         }
 
@@ -160,8 +165,8 @@ class RecyclerActivityAdapter(
         }
 
         private fun addItem() {
-            data.add(layoutPosition, generateItem() to false)
-            notifyItemInserted(layoutPosition)
+            data.add(layoutPosition + 1, generateItem() to false)
+            notifyItemInserted(layoutPosition + 1)
             notifyItemRangeChanged(layoutPosition + 1, data.size - 1)
         }
 
@@ -215,6 +220,20 @@ class RecyclerActivityAdapter(
         private const val TYPE_MARS = 1
         private const val TYPE_HEADER = 2
         private const val TYPE_FOOTER = 3
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        if (fromPosition != 0 && fromPosition != data.lastIndex && toPosition != 0 && toPosition != data.lastIndex) {
+            data.removeAt(fromPosition).apply {
+                data.add(toPosition, this)
+            }
+            notifyItemMoved(fromPosition, toPosition)
+        }
+    }
+
+    override fun onItemDismiss(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
     }
 
 

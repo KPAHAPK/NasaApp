@@ -3,6 +3,7 @@ package com.example.nasaapp.view.recycler
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.nasaapp.databinding.ActivityRecyclerBinding
 
 
@@ -32,5 +33,7 @@ class RecyclerActivity : AppCompatActivity() {
         binding.recyclerActivityFAB.setOnClickListener {
             adapter.appendItem()
         }
+
+        ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding.recyclerView)
     }
 }
