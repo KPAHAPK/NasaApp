@@ -11,7 +11,7 @@ import com.example.nasaapp.R
 import com.example.nasaapp.api.ApiActivity
 import com.example.nasaapp.api.ApiBottomActivity
 import com.example.nasaapp.databinding.BottomNavigationLayoutBinding
-import com.example.nasaapp.view.recycler.RecyclerActivity
+import com.example.nasaapp.view.recycler.recycler.RecyclerActivity
 import com.example.nasaapp.viewLifeCycle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

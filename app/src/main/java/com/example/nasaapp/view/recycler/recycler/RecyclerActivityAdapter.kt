@@ -1,4 +1,4 @@
-package com.example.nasaapp.view.recycler
+package com.example.nasaapp.view.recycler.recycler
 
 import android.view.LayoutInflater
 import android.view.MotionEvent

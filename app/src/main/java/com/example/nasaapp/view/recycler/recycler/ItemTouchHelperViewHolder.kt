@@ -1,4 +1,4 @@
-package com.example.nasaapp.view.recycler
+package com.example.nasaapp.view.recycler.recycler
 
 interface ItemTouchHelperViewHolder {
     fun onItemSelected()

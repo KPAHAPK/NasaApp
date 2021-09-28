@@ -1,16 +1,13 @@
-package com.example.nasaapp.view.recycler
+package com.example.nasaapp.view.recycler.recycler
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nasaapp.R
 import com.example.nasaapp.databinding.ActivityRecyclerBinding
-import okhttp3.internal.immutableListOf
 
 
 class RecyclerActivity : AppCompatActivity() {

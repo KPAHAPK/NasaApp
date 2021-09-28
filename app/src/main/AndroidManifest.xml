@@ -38,7 +38,7 @@
         </activity>
 
         <activity
-            android:name=".view.recycler.RecyclerActivity"
+            android:name=".view.recycler.recycler.RecyclerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
