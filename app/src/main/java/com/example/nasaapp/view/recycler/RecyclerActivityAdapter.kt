@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.MotionEventCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nasaapp.R
 import com.example.nasaapp.databinding.ActivityRecyclerItemEarthBinding
 import com.example.nasaapp.databinding.ActivityRecyclerItemFooterBinding
 import com.example.nasaapp.databinding.ActivityRecyclerItemHeaderBinding
@@ -81,12 +84,46 @@ class RecyclerActivityAdapter(
     }
 
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        (holder).bind(data[position])
+    override fun onBindViewHolder(
+        holder: BaseViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty())
+            super.onBindViewHolder(holder, position, payloads)
+        else {
+            val combinedChange =
+                createCombinedPayload(payloads as List<Change<Pair<Data, Boolean>>>)
+            val oldData = combinedChange.oldData
+            val newData = combinedChange.newData
+
+            if (newData.first.someText != oldData.first.someText) {
+                holder.itemView.findViewById<TextView>(R.id.marsTextView).text =
+                    data[position].first.someText
+            }
+        }
     }
+
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        holder.bind(data[position])
+    }
+
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+
+    inner class HeaderViewHolder(view: View) : BaseViewHolder(view) {
+        override fun bind(pairData: Pair<Data, Boolean>) {
+            ActivityRecyclerItemHeaderBinding.bind(itemView).apply {
+                root.setOnClickListener {
+                    data[1] = Pair(Data("Jupiter", ""), false)
+                    notifyItemChanged(1, Pair(Data("", ""), false))
+                    //onListItemClickListener.onItemClick(pairData.first)
+                }
+            }
+        }
     }
 
     inner class EarthViewHolder(view: View) : BaseViewHolder(view) {
@@ -135,7 +172,7 @@ class RecyclerActivityAdapter(
                     }
 
                 dragHandleImageView.setOnTouchListener { view, motionEvent ->
-                    if (MotionEventCompat.getActionMasked(motionEvent) == MotionEvent.ACTION_DOWN){
+                    if (MotionEventCompat.getActionMasked(motionEvent) == MotionEvent.ACTION_DOWN) {
                         onStartDragListener.onStartDrag(this@MarsViewHolder)
                     }
                     false
@@ -194,16 +231,6 @@ class RecyclerActivityAdapter(
         }
     }
 
-    inner class HeaderViewHolder(view: View) : BaseViewHolder(view) {
-        override fun bind(pairData: Pair<Data, Boolean>) {
-            ActivityRecyclerItemHeaderBinding.bind(itemView).apply {
-                root.setOnClickListener {
-                    onListItemClickListener.onItemClick(pairData.first)
-                }
-            }
-        }
-    }
-
     inner class FooterViewHolder(view: View) : BaseViewHolder(view) {
         override fun bind(pairData: Pair<Data, Boolean>) {
             ActivityRecyclerItemFooterBinding.bind(itemView).apply {
@@ -245,6 +272,13 @@ class RecyclerActivityAdapter(
     override fun onItemDismiss(position: Int) {
         data.removeAt(position)
         notifyItemRemoved(position)
+    }
+
+    fun setItems(newItems: List<Pair<Data, Boolean>>) {
+        val result = DiffUtil.calculateDiff(DiffUtilCallback(data, newItems))
+        result.dispatchUpdatesTo(this)
+        data.clear()
+        data.addAll(newItems)
     }
 
 
