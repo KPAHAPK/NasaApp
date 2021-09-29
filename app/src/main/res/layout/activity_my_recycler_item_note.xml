@@ -25,6 +25,16 @@
         app:layout_constraintStart_toEndOf="@+id/noteImageView"
         app:layout_constraintTop_toTopOf="@+id/noteImageView" />
 
+    <ImageView
+        android:id="@+id/note_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_star_outline_24_empty"
+        app:layout_constraintBottom_toBottomOf="@+id/noteTextView"
+        app:layout_constraintEnd_toStartOf="@+id/moveItemUp"
+        app:layout_constraintStart_toEndOf="@+id/noteTextView"
+        app:layout_constraintTop_toTopOf="@+id/noteTextView" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/noteDescriptionTextView"
         android:layout_width="wrap_content"

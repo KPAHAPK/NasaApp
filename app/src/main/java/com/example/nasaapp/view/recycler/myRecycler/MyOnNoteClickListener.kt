@@ -1,5 +1,5 @@
 package com.example.nasaapp.view.recycler.myRecycler
 
-interface OnNoteClickListener {
+interface MyOnNoteClickListener {
     fun onNoteClick(note: Note)
 }

@@ -98,7 +98,7 @@ class RecyclerActivityAdapter(
             val newData = combinedChange.newData
 
             if (newData.first.someText != oldData.first.someText) {
-                holder.itemView.findViewById<TextView>(R.id.noteTextView).text =
+                holder.itemView.findViewById<TextView>(R.id.marsTextView).text =
                     data[position].first.someText
             }
         }
