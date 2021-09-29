@@ -1,5 +1,6 @@
 package com.example.nasaapp.view.recycler.myRecycler
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import com.example.nasaapp.databinding.ActivityMyRecyclerItemNoteBinding
 class MyRecyclerViewAdapter(
     private val noteList: MutableList<Pair<Note, Boolean>>,
     private val onNoteClickListener: OnNoteClickListener
-) : RecyclerView.Adapter<MyRecyclerViewAdapter.NoteHolder>() {
+) : RecyclerView.Adapter<MyRecyclerViewAdapter.NoteHolder>(), MyItemTouchHelperAdapter {
 
     companion object {
         var noteCounter = 0
@@ -55,7 +56,7 @@ class MyRecyclerViewAdapter(
 
     var lastOpenedNote: Int = -1
 
-    inner class NoteHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class NoteHolder(view: View) : RecyclerView.ViewHolder(view), MyItemTouchHelperViewHolder {
         fun bind(pair: Pair<Note, Boolean>) {
             ActivityMyRecyclerItemNoteBinding.bind(itemView).apply {
                 noteTextView.apply {
@@ -134,5 +135,25 @@ class MyRecyclerViewAdapter(
             noteList.removeAt(layoutPosition)
             notifyItemRemoved(layoutPosition)
         }
+
+        override fun onItemSelected() {
+            itemView.setBackgroundColor(Color.RED)
+        }
+
+        override fun onItemClear() {
+            itemView.setBackgroundColor(0)
+        }
+    }
+
+    override fun onItemDrag(fromPosition: Int, toPosition: Int) {
+        noteList.removeAt(fromPosition).apply {
+            noteList.add(toPosition, this)
+        }
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    override fun onItemSwipe(position: Int) {
+        noteList.removeAt(position)
+        notifyItemRemoved(position)
     }
 }
