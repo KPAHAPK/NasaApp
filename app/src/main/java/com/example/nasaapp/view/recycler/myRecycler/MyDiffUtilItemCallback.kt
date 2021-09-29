@@ -32,17 +32,10 @@ class MyDiffUtilCallback(
             if (oldItem.first.isFavourite != newItem.first.isFavourite) {
                 putBoolean("isFavourite", newItem.first.isFavourite)
             }
-            if (size() == 0){
+            if (size() == 0) {
                 return null
             }
         }
         return diff
     }
 }
-
-//class MyDiffUtilItemCallback: DiffUtil.ItemCallback<Note>() {
-//    override fun areItemsTheSame(oldItem: Note, newItem: Note) = oldItem.id == newItem.id
-//
-//
-//    override fun areContentsTheSame(oldItem: Note, newItem: Note) = oldItem == newItem
-//}

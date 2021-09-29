@@ -35,7 +35,8 @@ class RecyclerActivity : AppCompatActivity() {
             }, data
         )
         val layoutManager = LinearLayoutManager(binding.recyclerView.context)
-        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, layoutManager.orientation )
+        val dividerItemDecoration =
+            DividerItemDecoration(binding.recyclerView.context, layoutManager.orientation)
 //        ContextCompat.getDrawable(applicationContext, R.drawable.bg_mars)?.let {
 //            dividerItemDecoration.setDrawable(
 //                it

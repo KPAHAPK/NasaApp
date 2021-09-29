@@ -3,7 +3,8 @@ package com.example.nasaapp.view.recycler.recycler
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemTouchHelperCallback(private val adapter: RecyclerActivityAdapter): ItemTouchHelper.Callback() {
+class ItemTouchHelperCallback(private val adapter: RecyclerActivityAdapter) :
+    ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled(): Boolean {
         return true
@@ -36,7 +37,7 @@ class ItemTouchHelperCallback(private val adapter: RecyclerActivityAdapter): Ite
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE){
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
             val itemViewHolder = viewHolder as ItemTouchHelperViewHolder
             itemViewHolder.onItemSelected()
         }

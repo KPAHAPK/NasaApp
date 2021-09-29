@@ -5,10 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 data class Change<out T>(
     val oldData: T,
     val newData: T
-) {
-
-
-}
+)
 
 class DiffUtilCallback(
     private var oldItems: List<Pair<Data, Boolean>>,

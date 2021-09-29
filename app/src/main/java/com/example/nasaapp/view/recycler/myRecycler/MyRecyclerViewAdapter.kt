@@ -7,14 +7,13 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nasaapp.R
 import com.example.nasaapp.databinding.ActivityMyRecyclerItemNoteBinding
 import kotlinx.android.synthetic.main.activity_my_recycler_item_note.view.*
 import kotlinx.android.synthetic.main.activity_recycler_item_mars.view.*
 import java.util.*
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.DiffUtil.DiffResult
 
 
 class MyRecyclerViewAdapter(
@@ -70,13 +69,14 @@ class MyRecyclerViewAdapter(
     override fun onBindViewHolder(holder: NoteHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
-        } else{
+        } else {
             val bundle = payloads[0] as Bundle
-            for (key in bundle.keySet()){
-                when (key){
+            for (key in bundle.keySet()) {
+                when (key) {
                     "name" -> holder.itemView.noteTextView.text = bundle.getString(key)
-                    "description" -> holder.itemView.noteDescriptionTextView.text = bundle.getString(key)
-                    "isFavourite" -> when(bundle.getBoolean(key)){
+                    "description" -> holder.itemView.noteDescriptionTextView.text =
+                        bundle.getString(key)
+                    "isFavourite" -> when (bundle.getBoolean(key)) {
                         true -> holder.itemView.note_favourite.setBackgroundResource(R.drawable.ic_baseline_star_outline_24_filled)
                         false -> holder.itemView.note_favourite.setBackgroundResource(R.drawable.ic_baseline_star_outline_24_empty)
                     }
@@ -139,8 +139,15 @@ class MyRecyclerViewAdapter(
                         false
                     }
                 }
-                noteFavourite.setOnClickListener {
-                    switchFavourite()
+                noteFavourite.apply {
+                    setOnClickListener {
+                        switchFavourite()
+                    }
+//                    if (pair.first.isFavourite){
+//                        setBackgroundResource(R.drawable.ic_baseline_star_outline_24_filled)
+//                    } else {
+//                        setBackgroundResource(R.drawable.ic_baseline_star_outline_24_empty)
+//                    }
                 }
             }
         }
