@@ -42,6 +42,7 @@
             android:exported="true">
 
         </activity>
+
         <activity android:name=".view.recycler.myRecycler.MyRecyclerActivity"
             android:exported="true">
             <intent-filter>

@@ -1,8 +1,6 @@
 package com.example.nasaapp.view.recycler.myRecycler
 
-import android.annotation.SuppressLint
 import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -21,6 +19,8 @@ class MyRecyclerViewAdapter(
     private val myOnNoteClickListener: MyOnNoteClickListener,
     private val onStartDragListener: MyOnStartDragListener
 ) : RecyclerView.Adapter<MyRecyclerViewAdapter.NoteHolder>(), MyItemTouchHelperAdapter {
+
+    val oldList = noteList.toMutableList()
 
     companion object {
         var noteCounter = 0
@@ -43,8 +43,6 @@ class MyRecyclerViewAdapter(
         return Note("note $noteCounter", "description")
     }
 
-    lateinit var binding: ActivityMyRecyclerItemNoteBinding
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -58,29 +56,38 @@ class MyRecyclerViewAdapter(
         return NoteHolder(view)
     }
 
-    fun updatePostingDetails(newNoteList: List<Pair<Note, Boolean>>) {
-        val diffCallback = MyDiffUtilCallback(noteList, newNoteList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        diffResult.dispatchUpdatesTo(this)
+    fun setItems(newList: List<Pair<Note, Boolean>>) {
+        val result = DiffUtil.calculateDiff(MyDiffUtilCallback(noteList, newList))
+        result.dispatchUpdatesTo(this)
         noteList.clear()
-        noteList.addAll(newNoteList)
+        noteList.addAll(newList)
     }
 
     override fun onBindViewHolder(holder: NoteHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
         } else {
-            val bundle = payloads[0] as Bundle
-            for (key in bundle.keySet()) {
-                when (key) {
-                    "name" -> holder.itemView.noteTextView.text = bundle.getString(key)
-                    "description" -> holder.itemView.noteDescriptionTextView.text =
-                        bundle.getString(key)
-                    "isFavourite" -> when (bundle.getBoolean(key)) {
-                        true -> holder.itemView.note_favourite.setBackgroundResource(R.drawable.ic_baseline_star_outline_24_filled)
-                        false -> holder.itemView.note_favourite.setBackgroundResource(R.drawable.ic_baseline_star_outline_24_empty)
+            val combinedChange =
+                myCreateCombinedPayload(payloads as List<NoteChange<Pair<Note, Boolean>>>)
+            val oldData = combinedChange.oldData
+            val newData = combinedChange.newData
+
+            if (newData.first.name != oldData.first.name) {
+                holder.itemView.noteTextView.text =
+                    noteList[position].first.name
+            }
+            if (newData.first.description != oldData.first.description) {
+                holder.itemView.noteDescriptionTextView.text =
+                    noteList[position].first.description
+            }
+            if (newData.first.isFavourite != oldData.first.isFavourite) {
+                holder.itemView.note_favourite.setBackgroundResource(
+                    if (newData.first.isFavourite) {
+                        R.drawable.ic_baseline_star_24
+                    } else {
+                        R.drawable.ic_baseline_star_outline_24_empty
                     }
-                }
+                )
             }
         }
     }
@@ -95,7 +102,6 @@ class MyRecyclerViewAdapter(
 
     inner class NoteHolder(view: View) : RecyclerView.ViewHolder(view),
         MyItemTouchHelperViewHolder {
-        @SuppressLint("ClickableViewAccessibility")
         fun bind(pair: Pair<Note, Boolean>) {
             ActivityMyRecyclerItemNoteBinding.bind(itemView).apply {
                 noteTextView.apply {
@@ -133,29 +139,26 @@ class MyRecyclerViewAdapter(
                 dragHandleImageView.setOnTouchListener { view, motionEvent ->
                     if (motionEvent.action == MotionEvent.ACTION_DOWN) {
                         onStartDragListener.onStartDrag(this@NoteHolder)
-                        true
-                    } else {
-                        view.performClick()
-                        false
                     }
+                    true
                 }
                 noteFavourite.apply {
                     setOnClickListener {
                         switchFavourite()
                     }
-//                    if (pair.first.isFavourite){
-//                        setBackgroundResource(R.drawable.ic_baseline_star_outline_24_filled)
-//                    } else {
-//                        setBackgroundResource(R.drawable.ic_baseline_star_outline_24_empty)
-//                    }
+
                 }
             }
         }
 
         private fun switchFavourite() {
-            noteList[layoutPosition].first.apply {
+            val newList = noteList.toMutableList()
+            newList[layoutPosition] = Pair(noteList[layoutPosition].first.copy(), noteList[layoutPosition].second)
+            newList[layoutPosition].first.apply {
                 isFavourite = !isFavourite
             }
+            this@MyRecyclerViewAdapter.setItems(newList)
+
         }
 
         private fun showDescription() {

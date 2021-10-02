@@ -1,6 +1,5 @@
 package com.example.nasaapp.view.recycler.myRecycler
 
-import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
 
 class MyDiffUtilCallback(
@@ -15,27 +14,28 @@ class MyDiffUtilCallback(
         oldList[oldItemPosition].first.id == newList[newItemPosition].first.id
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-        oldList[oldItemPosition] == newList[newItemPosition]
+        oldList[oldItemPosition].first.isFavourite == newList[newItemPosition].first.isFavourite
 
     override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
         val oldItem = oldList[oldItemPosition]
-        val newItem = oldList[newItemPosition]
+        val newItem = newList[newItemPosition]
 
-        val diff = Bundle()
-        with(diff) {
-            if (oldItem.first.name != newItem.first.name) {
-                putString("name", newItem.first.name)
-            }
-            if (oldItem.first.description != newItem.first.description) {
-                putString("description", newItem.first.description)
-            }
-            if (oldItem.first.isFavourite != newItem.first.isFavourite) {
-                putBoolean("isFavourite", newItem.first.isFavourite)
-            }
-            if (size() == 0) {
-                return null
-            }
-        }
-        return diff
+        return NoteChange(
+            oldItem,
+            newItem
+        )
     }
+}
+
+data class NoteChange<out T>(
+    val oldData: T,
+    val newData: T
+)
+
+
+fun <T> myCreateCombinedPayload(payloads: List<NoteChange<T>>): NoteChange<T> {
+    assert(payloads.isNotEmpty())
+    val firstChange = payloads.first()
+    val lastChange = payloads.last()
+    return NoteChange(firstChange.oldData, lastChange.newData)
 }

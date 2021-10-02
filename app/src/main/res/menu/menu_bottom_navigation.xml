@@ -12,6 +12,11 @@
         <item
             android:id="@+id/navigation_three"
             android:icon="@drawable/ic_wikipedia"
-            android:title="На экран 3" />
+            android:title="recyclerView Mars" />
+
+        <item
+            android:id="@+id/navigation_four"
+            android:icon="@drawable/ic_wikipedia"
+            android:title="recyclerView Notes" />
     </group>
 </menu>
