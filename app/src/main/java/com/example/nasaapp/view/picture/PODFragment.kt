@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
 import com.example.nasaapp.R
-import com.example.nasaapp.databinding.FragmentMainBinding
+import com.example.nasaapp.databinding.FragmentMainStartBinding
 import com.example.nasaapp.repository.responsedata.PODData
 import com.example.nasaapp.view.MainActivity
 import com.example.nasaapp.view.chips.SettingsFragment
@@ -26,7 +26,7 @@ private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
 
 class PODFragment : Fragment() {
-    private var binding: FragmentMainBinding by viewLifeCycle()
+    private var binding: FragmentMainStartBinding by viewLifeCycle()
 
     private val viewModelPOD: PODViewModel by lazy {
         ViewModelProvider(this)[PODViewModel::class.java]
@@ -48,7 +48,7 @@ class PODFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMainBinding.inflate(inflater)
+        binding = FragmentMainStartBinding.inflate(inflater)
         val view = binding.root
         setAppBar()
         return view
@@ -95,7 +95,7 @@ class PODFragment : Fragment() {
             renderData(it)
         }
 
-        viewModelPOD.sendServerRequest(PODDayOffset)
+        viewModelPOD.sendServerRequestPOD(PODDayOffset)
 
 
         binding.inputLayout.setEndIconOnClickListener {
@@ -138,7 +138,7 @@ class PODFragment : Fragment() {
                             PODDayOffset = -2
                         }
                     }
-                    sendServerRequest(PODDayOffset)
+                    sendServerRequestPOD(PODDayOffset)
                 }
             }
         }
@@ -157,23 +157,6 @@ class PODFragment : Fragment() {
     private fun setBottomSheetBehaviour(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        /*  bottomSheetBehavior.addBottomSheetCallback(object :
-              BottomSheetBehavior.BottomSheetCallback() {
-              override fun onStateChanged(bottomSheet: View, newState: Int) {
-                  when (newState) {
-                      BottomSheetBehavior.STATE_DRAGGING -> TODO("not implemented")
-                      BottomSheetBehavior.STATE_COLLAPSED -> TODO("not implemented")
-                      BottomSheetBehavior.STATE_EXPANDED -> TODO("not implemented")
-                      BottomSheetBehavior.STATE_HALF_EXPANDED -> TODO("not implemented")
-                      BottomSheetBehavior.STATE_HIDDEN -> TODO("not implemented")
-                      BottomSheetBehavior.STATE_SETTLING -> TODO("not implemented")
-                  }
-              }
-
-              override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                  TODO("not implemented")
-              }
-          })*/
     }
 
     private fun renderData(data: PODData) {
@@ -182,11 +165,12 @@ class PODFragment : Fragment() {
                 val errorSnackbar =
                     Snackbar.make(binding.root, R.string.retry_request, Snackbar.LENGTH_INDEFINITE)
                 errorSnackbar.setAction(R.string.snackbar_retry_message) {
-                    viewModelPOD.sendServerRequest(PODDayOffset)
+                    viewModelPOD.sendServerRequestPOD(PODDayOffset)
                 }
                 errorSnackbar.show()
             }
             is PODData.Loading -> {
+                binding.playVideoOfTheDay.visibility = View.INVISIBLE
                 binding.imagePictureOfTheDate.load(R.drawable.progress_animation) {
                     error(R.drawable.ic_load_error_vector)
                 }
@@ -205,22 +189,44 @@ class PODFragment : Fragment() {
     }
 
     private fun updateUI() {
+        setMedia()
+        binding.includedBottomSheet.bottomSheetDescriptionHeader.text = title
+        binding.includedBottomSheet.bottomSheetDescription.text = explanation
+        binding.includedBottomSheet.bottomSheetCopyright.text = copyright
+
+    }
+
+    private fun setMedia() {
+        when (mediaType) {
+            "image" -> setUrlOrHdurlImage()
+            "video" -> {
+                val idVideo = url?.substringAfterLast("/")?.substringBeforeLast("?")
+                binding.imagePictureOfTheDate.load(Uri.parse("https://img.youtube.com/vi/$idVideo/1.jpg"))
+                binding.playVideoOfTheDay.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUrlOrHdurlImage() {
         binding.imagePictureOfTheDate.apply {
             if (binding.chipImageHd.isChecked) {
                 load(url) {
-                    placeholder(R.drawable.progress_image)
+                    placeholder(R.drawable.progress_animation)
                     error(R.drawable.ic_load_error_vector)
                 }
             } else {
                 load(hdurl) {
-                    placeholder(R.drawable.progress_image)
+                    placeholder(R.drawable.progress_animation)
                     error(R.drawable.ic_load_error_vector)
                 }
             }
         }
-        binding.includedBottomSheet.bottomSheetDescriptionHeader.text = title
-        binding.includedBottomSheet.bottomSheetDescription.text = explanation
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

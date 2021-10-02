@@ -4,7 +4,7 @@
     <item
         android:id="@+id/bottom_view_earth"
         android:icon="@drawable/ic_wikipedia"
-        android:title="Earth" />
+        android:title="SolarFlare" />
 
     <item
         android:id="@+id/bottom_view_mars"
