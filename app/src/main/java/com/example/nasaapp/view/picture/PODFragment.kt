@@ -7,15 +7,21 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.text.style.TypefaceSpan
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.provider.FontRequest
+import androidx.core.provider.FontsContractCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.*
@@ -247,16 +253,37 @@ class PODFragment : Fragment() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 typeface = resources.getFont(R.font.font2)
             }
-            val text2 = "My text \nbullet one \nbullet two"
-            val spannable = SpannableStringBuilder(text2)
-            val start = 0
-            val end = 20
+            val spannable = SpannableStringBuilder(explanation)
+            this.setText(spannable, TextView.BufferType.SPANNABLE)
+            val spannableText = this.text as Spannable
 
-            spannable.setSpan(
-                ForegroundColorSpan(Color.CYAN),
-                start, end,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            this.text = spannable
+            val request = FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                "Aguafina Script",
+                R.array.com_google_android_gms_fonts_certs
+            )
+
+            val fontCallback = object : FontsContractCompat.FontRequestCallback() {
+                override fun onTypefaceRetrieved(typeface: Typeface?) {
+                    typeface?.let {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            spannableText.setSpan(
+                                TypefaceSpan(it),
+                                0,
+                                25,
+                                Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                            )
+                        }
+                    }
+                }
+
+                override fun onTypefaceRequestFailed(reason: Int) {
+                    super.onTypefaceRequestFailed(reason)
+                }
+            }
+
+            FontsContractCompat.requestFont(requireContext(), request, fontCallback, Handler(Looper.getMainLooper()))
 
         }
         binding.includedBottomSheet.bottomSheetCopyright.text = copyright
