@@ -6,6 +6,10 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.BulletSpan
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
@@ -27,6 +31,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.bottom_sheet_theme_list.view.*
 
 private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -238,10 +243,13 @@ class PODFragment : Fragment() {
         binding.includedBottomSheet.bottomSheetDescriptionHeader.text = title
         binding.includedBottomSheet.includeLayoutTv.textView.apply {
             text = explanation
-             typeface = Typeface.createFromAsset(requireActivity().assets, "font1.ttf")
+            typeface = Typeface.createFromAsset(requireActivity().assets, "font1.ttf")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 typeface = resources.getFont(R.font.font2)
             }
+            val text = "My text <ul><li>bullet one</li><li>bullet two</li></ul>"
+            this.text = Html.fromHtml(text, 0)
+
         }
         binding.includedBottomSheet.bottomSheetCopyright.text = copyright
 
