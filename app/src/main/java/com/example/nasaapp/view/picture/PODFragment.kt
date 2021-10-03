@@ -247,8 +247,27 @@ class PODFragment : Fragment() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 typeface = resources.getFont(R.font.font2)
             }
-            val text = "My text <ul><li>bullet one</li><li>bullet two</li></ul>"
-            this.text = Html.fromHtml(text, 0)
+            val text2 = "My text \nbullet one \nbullet two"
+            val spannapble = SpannableStringBuilder(text2)
+            spannapble.setSpan(
+                BulletSpan(
+                    BulletSpan.STANDARD_GAP_WIDTH,
+                    resources.getColor(R.color.colorAccent, activity?.theme)
+                ),
+                text2.indexOf("\n", text2.indexOf("\n")) +1,
+                text2.indexOf("\n", text2.indexOf("\n") + 1),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannapble.setSpan(
+                BulletSpan(
+                    BulletSpan.STANDARD_GAP_WIDTH,
+                    resources.getColor(R.color.colorAccent, activity?.theme)
+                ),
+                text2.indexOf("\n", text2.indexOf("\n") + 1) + 1,
+                text2.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            this.text = spannapble
 
         }
         binding.includedBottomSheet.bottomSheetCopyright.text = copyright
