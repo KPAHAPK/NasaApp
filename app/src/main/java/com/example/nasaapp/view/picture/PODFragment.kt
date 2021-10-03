@@ -2,14 +2,14 @@ package com.example.nasaapp.view.picture
 
 import android.animation.AnimatorInflater
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.style.BulletSpan
+import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
@@ -248,26 +248,15 @@ class PODFragment : Fragment() {
                 typeface = resources.getFont(R.font.font2)
             }
             val text2 = "My text \nbullet one \nbullet two"
-            val spannapble = SpannableStringBuilder(text2)
-            spannapble.setSpan(
-                BulletSpan(
-                    BulletSpan.STANDARD_GAP_WIDTH,
-                    resources.getColor(R.color.colorAccent, activity?.theme)
-                ),
-                text2.indexOf("\n", text2.indexOf("\n")) +1,
-                text2.indexOf("\n", text2.indexOf("\n") + 1),
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            spannapble.setSpan(
-                BulletSpan(
-                    BulletSpan.STANDARD_GAP_WIDTH,
-                    resources.getColor(R.color.colorAccent, activity?.theme)
-                ),
-                text2.indexOf("\n", text2.indexOf("\n") + 1) + 1,
-                text2.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            this.text = spannapble
+            val spannable = SpannableStringBuilder(text2)
+            val start = 0
+            val end = 20
+
+            spannable.setSpan(
+                ForegroundColorSpan(Color.CYAN),
+                start, end,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            this.text = spannable
 
         }
         binding.includedBottomSheet.bottomSheetCopyright.text = copyright
