@@ -2,7 +2,9 @@ package com.example.nasaapp.view.picture
 
 import android.animation.AnimatorInflater
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
@@ -234,7 +236,13 @@ class PODFragment : Fragment() {
     private fun updateUI() {
         setMedia()
         binding.includedBottomSheet.bottomSheetDescriptionHeader.text = title
-        binding.includedBottomSheet.bottomSheetDescription.text = explanation
+        binding.includedBottomSheet.includeLayoutTv.textView.apply {
+            text = explanation
+             typeface = Typeface.createFromAsset(requireActivity().assets, "font1.ttf")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                typeface = resources.getFont(R.font.font2)
+            }
+        }
         binding.includedBottomSheet.bottomSheetCopyright.text = copyright
 
     }
