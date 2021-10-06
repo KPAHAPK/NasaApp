@@ -17,10 +17,10 @@ class LastSolarFlareFragment : Fragment() {
 
     private var binding: FragmentLastSolarFlareBinding by viewLifeCycle()
 
-    private var beginTime : String? = null
-    private var peakTime  : String? = null
-    private var endTime : String? = null
-    private var sourceLocation : String? = null
+    private var beginTime: String? = null
+    private var peakTime: String? = null
+    private var endTime: String? = null
+    private var sourceLocation: String? = null
 
     private val viewModelSolarFlare: SolarFlareViewModel by lazy {
         ViewModelProvider(this).get(SolarFlareViewModel::class.java)
@@ -53,10 +53,15 @@ class LastSolarFlareFragment : Fragment() {
         binding.solarFlareLocation.text = getString(R.string.solar_flare_location, sourceLocation)
     }
 
-    private fun renderData(data: SolarFlareData){
-        when(data){
-            is SolarFlareData.Loading -> Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
-            is SolarFlareData.Error -> {}
+    private fun renderData(data: SolarFlareData) {
+        when (data) {
+            is SolarFlareData.Loading -> Toast.makeText(
+                requireContext(),
+                "Loading",
+                Toast.LENGTH_SHORT
+            ).show()
+            is SolarFlareData.Error -> {
+            }
             is SolarFlareData.Success -> {
                 beginTime = data.serverResponseData.last().beginTime
                 peakTime = data.serverResponseData.last().peakTime

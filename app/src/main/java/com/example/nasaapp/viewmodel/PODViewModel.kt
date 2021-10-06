@@ -9,8 +9,6 @@ import com.example.nasaapp.BuildConfig
 import com.example.nasaapp.R
 import com.example.nasaapp.repository.responsedata.PODData
 import com.example.nasaapp.repository.responsedata.PODServerResponseData
-import com.example.nasaapp.repository.responsedata.SolarFlareData
-import com.example.nasaapp.repository.responsedata.SolarFlareServerResponseData
 import com.example.nasaapp.repository.retrofit.RetrofitImpl
 import retrofit2.Call
 import retrofit2.Callback

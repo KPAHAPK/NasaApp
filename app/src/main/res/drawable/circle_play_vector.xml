@@ -5,25 +5,25 @@
     android:viewportWidth="64"
     android:viewportHeight="64">
 
-  <path
-      android:name="circle"
-      android:pathData="@string/clockwise_circle"
-      android:strokeWidth="5"
-      android:strokeColor="@android:color/white"
-      android:strokeLineCap="round" />
+    <path
+        android:name="circle"
+        android:pathData="@string/clockwise_circle"
+        android:strokeWidth="5"
+        android:strokeColor="@android:color/white"
+        android:strokeLineCap="round" />
 
-  <path
-      android:name="pause_left"
-      android:pathData="@string/pause_left"
-      android:strokeWidth="5"
-      android:strokeColor="@android:color/white"
-      android:strokeLineCap="round" />
+    <path
+        android:name="pause_left"
+        android:pathData="@string/pause_left"
+        android:strokeWidth="5"
+        android:strokeColor="@android:color/white"
+        android:strokeLineCap="round" />
 
-  <path
-      android:name="pause_right"
-      android:pathData="@string/pause_right_play"
-      android:strokeWidth="5"
-      android:strokeColor="@android:color/white"
-      android:strokeLineCap="round"
-      android:strokeLineJoin="round" />
+    <path
+        android:name="pause_right"
+        android:pathData="@string/pause_right_play"
+        android:strokeWidth="5"
+        android:strokeColor="@android:color/white"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
 </vector>

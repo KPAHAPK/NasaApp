@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -284,8 +283,9 @@ class PODFragment : Fragment() {
                 Toast.makeText(requireContext(), R.string.favourite, Toast.LENGTH_SHORT).show()
             }
             R.id.app_bar_settings -> {
+                Toast.makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT).show()
                 val settingFragment = requireActivity().supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.fragment_in, R.anim.fragment_out)
+                    .setCustomAnimations(R.anim.fragment_in_animation, R.anim.fragment_out)
                     .replace(R.id.main_container, SettingsFragment.newInstance())
                     .addToBackStack("")
                 settingFragment.commit()
@@ -293,22 +293,15 @@ class PODFragment : Fragment() {
             android.R.id.home -> {
                 Toast.makeText(requireContext(), R.string.home, Toast.LENGTH_SHORT).show()
                 activity?.let {
-                    BottomNavigationDrawerPODFragment().show(it.supportFragmentManager, "")
+                    val homeFragment = it.supportFragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(0, R.anim.fragment_out)
+
+                    BottomNavigationDrawerPODFragment().show(homeFragment, "")
                 }
             }
         }
         return true
-    }
-
-    private fun setStartActivityAnimation() {
-        val slide = Slide()
-        slide.slideEdge = Gravity.START
-        slide.duration = 400
-        slide.interpolator = (DecelerateInterpolator())
-        val set = TransitionSet()
-            .addTransition(slide)
-            .clone()
-        TransitionManager.beginDelayedTransition(binding.root, set)
     }
 
     companion object {

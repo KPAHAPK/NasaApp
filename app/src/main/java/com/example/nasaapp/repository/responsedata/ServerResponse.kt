@@ -7,7 +7,9 @@ sealed class PODData {
 }
 
 sealed class SolarFlareData {
-    data class Success(val serverResponseData: List<SolarFlareServerResponseData>) : SolarFlareData()
+    data class Success(val serverResponseData: List<SolarFlareServerResponseData>) :
+        SolarFlareData()
+
     data class Error(val throwable: Throwable) : SolarFlareData()
     object Loading : SolarFlareData()
 }
