@@ -25,6 +25,10 @@
         <!--                <item name="bottomNavigationStyle">@id/myBottomNavigationView</item>-->
 
     </style>
+    
+    <style name="Theme.NasaApp.Splash">
+        <item name="android:windowBackground">@drawable/splash_background_drawable</item>
+    </style>
 
     <style name="Theme.NasaApp.myBlueTheme">
         <item name="colorPrimary">#0d47a1</item>
