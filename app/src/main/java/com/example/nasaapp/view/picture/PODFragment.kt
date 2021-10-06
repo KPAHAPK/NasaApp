@@ -2,14 +2,26 @@ package com.example.nasaapp.view.picture
 
 import android.animation.AnimatorInflater
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.TypefaceSpan
 import android.view.*
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.provider.FontRequest
+import androidx.core.provider.FontsContractCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.*
@@ -25,6 +37,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.bottom_sheet_theme_list.view.*
 
 private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -234,7 +247,45 @@ class PODFragment : Fragment() {
     private fun updateUI() {
         setMedia()
         binding.includedBottomSheet.bottomSheetDescriptionHeader.text = title
-        binding.includedBottomSheet.bottomSheetDescription.text = explanation
+        binding.includedBottomSheet.includeLayoutTv.textView.apply {
+            text = explanation
+            typeface = Typeface.createFromAsset(requireActivity().assets, "font1.ttf")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                typeface = resources.getFont(R.font.font2)
+            }
+            val spannable = SpannableStringBuilder(explanation)
+            this.setText(spannable, TextView.BufferType.SPANNABLE)
+            val spannableText = this.text as Spannable
+
+            val request = FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                "Aguafina Script",
+                R.array.com_google_android_gms_fonts_certs
+            )
+
+            val fontCallback = object : FontsContractCompat.FontRequestCallback() {
+                override fun onTypefaceRetrieved(typeface: Typeface?) {
+                    typeface?.let {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            spannableText.setSpan(
+                                TypefaceSpan(it),
+                                0,
+                                25,
+                                Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                            )
+                        }
+                    }
+                }
+
+                override fun onTypefaceRequestFailed(reason: Int) {
+                    super.onTypefaceRequestFailed(reason)
+                }
+            }
+
+            FontsContractCompat.requestFont(requireContext(), request, fontCallback, Handler(Looper.getMainLooper()))
+
+        }
         binding.includedBottomSheet.bottomSheetCopyright.text = copyright
 
     }

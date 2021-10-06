@@ -123,6 +123,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.example.nasaapp.view.CustomImageView
+        android:id="@+id/play_video_of_the_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_play_circle_72"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include android:id="@+id/include_layout_tv"
+        layout="@layout/fragment_main_explanation_text"/>
+
 
     <include
         android:id="@+id/included_bottom_sheet"
