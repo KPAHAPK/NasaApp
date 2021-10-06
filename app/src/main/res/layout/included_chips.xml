@@ -218,14 +218,28 @@
             android:text="Choice C" />
     </com.google.android.material.chip.ChipGroup>
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_close"
-        style="@style/Widget.MaterialComponents.Chip.Entry"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
-        android:text="Close Icon Listener" />
+        android:orientation="horizontal">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_close"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:text="Close Icon Listener" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/play_pause_circle"
+            android:backgroundTint="@color/colorAccent"
+            android:checked="true"
+            android:thumb="@null" />
+    </LinearLayout>
 
 
 </LinearLayout>

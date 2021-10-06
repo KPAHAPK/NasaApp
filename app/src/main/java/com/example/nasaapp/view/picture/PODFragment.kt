@@ -1,14 +1,19 @@
 package com.example.nasaapp.view.picture
 
+import android.animation.AnimatorInflater
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.*
 import coil.api.load
 import com.example.nasaapp.R
 import com.example.nasaapp.databinding.FragmentMainStartBinding
@@ -42,12 +47,11 @@ class PODFragment : Fragment() {
     private var url: String? = null
     private var hdurl: String? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainStartBinding.inflate(inflater)
         val view = binding.root
         setAppBar()
@@ -94,10 +98,40 @@ class PODFragment : Fragment() {
         viewModelPOD.getLiveData().observe(viewLifecycleOwner) {
             renderData(it)
         }
-
         viewModelPOD.sendServerRequestPOD(PODDayOffset)
 
+        setWikiSearchOnClick()
+        setBottomSheetBehaviour(binding.includedBottomSheet.bottomSheetContainer)
 
+        setChipsPODListener()
+
+        setImageScaleAnimation(binding.imagePictureOfTheDate)
+    }
+
+    private fun setImageScaleAnimation(imageView: ImageView) {
+        var isExpanded = false
+        imageView.setOnClickListener {
+            isExpanded = !isExpanded
+            val changeBounds = ChangeBounds()
+            changeBounds.resizeClip = true
+
+            val set = TransitionSet()
+                .addTransition(changeBounds)
+                .addTransition(ChangeImageTransform())
+            set.interpolator = AnticipateOvershootInterpolator(2.0f)
+
+            TransitionManager.beginDelayedTransition(binding.mainContainer, set)
+
+            val param: ViewGroup.LayoutParams = it.layoutParams
+            param.height =
+                if (isExpanded) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT
+            it.layoutParams = param
+            binding.imagePictureOfTheDate.scaleType =
+                if (isExpanded) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.FIT_CENTER
+        }
+    }
+
+    private fun setWikiSearchOnClick() {
         binding.inputLayout.setEndIconOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data =
@@ -110,19 +144,22 @@ class PODFragment : Fragment() {
             }
             startActivity(intent)
         }
-        setBottomSheetBehaviour(binding.includedBottomSheet.bottomSheetContainer)
-        setChipPODListener()
-
     }
 
-    private fun setChipPODListener() {
-        var lastCheckedId = View.NO_ID
+    private fun setBottomSheetBehaviour(bottomSheet: ConstraintLayout) {
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
+
+    private fun setChipsPODListener() {
         binding.chipImageChooser.setOnCheckedChangeListener { group, checkedId ->
+            var lastCheckedId = View.NO_ID
             if (checkedId == View.NO_ID) {
                 group.check(lastCheckedId)
                 return@setOnCheckedChangeListener
             }
             lastCheckedId = checkedId
+
 
             val chip: Chip? = group.findViewById(lastCheckedId)
             chip?.let {
@@ -138,6 +175,7 @@ class PODFragment : Fragment() {
                             PODDayOffset = -2
                         }
                     }
+                    setRotateViewAnimation(chip)
                     sendServerRequestPOD(PODDayOffset)
                 }
             }
@@ -154,10 +192,15 @@ class PODFragment : Fragment() {
 
     }
 
-    private fun setBottomSheetBehaviour(bottomSheet: ConstraintLayout) {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    private fun setRotateViewAnimation(view: View) {
+        val viewAnimator =
+            AnimatorInflater.loadAnimator(requireContext(), R.animator.chip_animator)
+        val scale = requireContext().resources.displayMetrics.density
+        view.cameraDistance = 8000 * scale
+        viewAnimator.setTarget(view)
+        viewAnimator.start()
     }
+
 
     private fun renderData(data: PODData) {
         when (data) {
@@ -171,6 +214,7 @@ class PODFragment : Fragment() {
             }
             is PODData.Loading -> {
                 binding.playVideoOfTheDay.visibility = View.INVISIBLE
+
                 binding.imagePictureOfTheDate.load(R.drawable.progress_animation) {
                     error(R.drawable.ic_load_error_vector)
                 }
@@ -240,11 +284,11 @@ class PODFragment : Fragment() {
                 Toast.makeText(requireContext(), R.string.favourite, Toast.LENGTH_SHORT).show()
             }
             R.id.app_bar_settings -> {
-                Toast.makeText(requireContext(), R.string.settings, Toast.LENGTH_SHORT).show()
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, SettingsFragment.newInstance())
+                val settingFragment = requireActivity().supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.fragment_in, R.anim.fragment_out)
+                    .replace(R.id.main_container, SettingsFragment.newInstance())
                     .addToBackStack("")
-                    .commit()
+                settingFragment.commit()
             }
             android.R.id.home -> {
                 Toast.makeText(requireContext(), R.string.home, Toast.LENGTH_SHORT).show()
@@ -254,6 +298,17 @@ class PODFragment : Fragment() {
             }
         }
         return true
+    }
+
+    private fun setStartActivityAnimation() {
+        val slide = Slide()
+        slide.slideEdge = Gravity.START
+        slide.duration = 400
+        slide.interpolator = (DecelerateInterpolator())
+        val set = TransitionSet()
+            .addTransition(slide)
+            .clone()
+        TransitionManager.beginDelayedTransition(binding.root, set)
     }
 
     companion object {

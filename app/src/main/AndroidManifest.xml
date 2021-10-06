@@ -14,7 +14,9 @@
 
         <activity
             android:name=".api.ApiBottomActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+
+        </activity>
 
         <activity
             android:name=".api.ApiActivity"
@@ -31,6 +33,19 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity android:name=".view.animation.AnimationActivity"
+            android:exported="true">
+
+
+        </activity>
+
+        <activity android:name=".view.animation.AnimationActivityBonus"
+            android:exported="true">
+
+
         </activity>
     </application>
 

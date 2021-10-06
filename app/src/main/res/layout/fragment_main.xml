@@ -63,6 +63,40 @@
 
         </com.google.android.material.chip.ChipGroup>
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_image_chooser_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedChip="@id/chip_image_today"
+            app:layout_constraintBottom_toTopOf="@id/image_picture_of_the_date"
+            app:layout_constraintEnd_toStartOf="@id/chip_image_hd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_image_before_yesterday_back"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/before_yestarday" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_image_yesterday_back"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yesterday" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_image_today_back"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today" />
+
+        </com.google.android.material.chip.ChipGroup>
+
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_image_hd"
             style="@style/Widget.MaterialComponents.Chip.Filter"

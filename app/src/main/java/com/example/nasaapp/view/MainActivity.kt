@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 //                .commitNow()
 
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, PODFragment.newInstance())
+                .replace(R.id.main_container, PODFragment.newInstance())
                 .commitNow()
         }
     }

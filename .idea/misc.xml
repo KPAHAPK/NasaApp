@@ -4,12 +4,25 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3310810810810811" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/circle_pause_vector.xml" value="0.32666666666666666" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/circle_play_vector.xml" value="0.32666666666666666" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_archive.xml" value="0.22135416666666666" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_back_fab.xml" value="0.32666666666666666" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_baseline_comment_24.xml" value="0.32666666666666666" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_baseline_format_color_reset_24.xml" value="0.32666666666666666" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_baseline_pause_circle_outline_24.xml" value="0.17882882882882883" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_baseline_play_circle_72.xml" value="0.3310810810810811" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_baseline_play_circle_outline_24.xml" value="0.17882882882882883" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_hamburger_menu_bottom_bar.xml" value="0.22477477477477478" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.32666666666666666" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.3310810810810811" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_load_error_vector.xml" value="0.18828828828828828" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_no_photo_vector.xml" value="0.2140625" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_search.xml" value="0.17882882882882883" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/ic_wikipedia.xml" value="0.3828125" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/pause_to_play.xml" value="0.17882882882882883" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/play_pause_circle.xml" value="0.17882882882882883" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/play_to_pause.xml" value="0.17882882882882883" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/progress_animation.xml" value="0.23108108108108108" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/swipe_indicator_active.xml" value="0.19144144144144143" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/drawable/swipe_indicator_inactive.xml" value="0.19144144144144143" />
@@ -25,6 +38,15 @@
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/font/my_font_choice_chip_italic_400.xml" value="0.2036036036036036" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/font/my_font_choice_chip_normal_400.xml" value="0.34324324324324323" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/font/my_font_def.xml" value="0.19414414414414413" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation.xml" value="0.3171171171171171" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation_bonus_end.xml" value="0.16486486486486487" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation_bonus_start.xml" value="0.16486486486486487" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation_enlarge.xml" value="0.25900900900900903" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation_explode.xml" value="0.3171171171171171" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation_explode_list_item.xml" value="0.3171171171171171" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation_fab_2.xml" value="0.1547933157431838" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation_path_transaction.xml" value="0.21711711711711712" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_animation_shuffle.xml" value="0.21711711711711712" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_api.xml" value="0.3171171171171171" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_api_bottom.xml" value="0.30495495495495495" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/layout/activity_api_tablayout_item.xml" value="0.3171171171171171" />
@@ -56,11 +78,13 @@
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/menu/menu_theme_changer.xml" value="0.3171171171171171" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/menu/menu_theme_chooser.xml" value="0.17747747747747747" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/menu/menu_theme_list.xml" value="0.3171171171171171" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17882882882882883" />
         <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/xml/motion_scene.xml" value="0.3171171171171171" />
+        <entry key="..\:/IT/GB/MaterialDesign/NasaApp/app/src/main/res/xml/scene_fragment_settings.xml" value="0.21081081081081082" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="16" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="16" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
