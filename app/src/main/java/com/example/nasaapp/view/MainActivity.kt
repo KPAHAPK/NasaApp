@@ -9,7 +9,6 @@ import com.example.nasaapp.view.themes.AppThemeStorage
 
 class MainActivity : AppCompatActivity() {
 
-//    private lateinit var appThemeStorage: AppThemeStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,9 +18,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.container, SettingsFragment.newInstance())
-//                .commitNow()
 
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container, PODFragment.newInstance())
